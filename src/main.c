@@ -1,18 +1,24 @@
-#include <stdio.h>
-#include <GL/glut.h>
-
+#include "spaceSnake.h"
 #include "drawing.h"
+#include "moving.h"
 
-typedef struct	s_vec3f {
-	GLfloat x;
-	GLfloat y;
-	GLfloat z;
-}				vec3f;
+vec3f g_pos = {.x = 0.f, .y = 0.f, .z = 20.f};
+//vec3f g_vel = {.x = 0.f, .y = 0.f, .z = -1.f};
 
-vec3f pos = {.x = 0.f, .y = 0.f, .z = 0.f};
-vec3f vel = {.x = 0.f, .y = 0.f, .z = -1.f};
+dirMat g_cam = {
+	.f.x = 0.f, .f.y = 0.f, .f.z = -1.f,
+	.u.x = 0.f, .u.y = 1.f, .u.z = 0.f,
+	.l.x =1.f, .l.y =0.f, .l.z = 0.f
+};
 
 void key(unsigned char key, int x, int y) {
+	switch (key) {
+		case 'a': break;
+		case 'd': break;
+		case 'w': break;
+		case 's': break;
+		default: break;
+	}
 
 }
 
@@ -20,7 +26,7 @@ void display() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
-	gluLookAt(0., 0., 20., 0., 0., 0., 0., 1., 0.);
+	gluLookAt(g_pos.x, g_pos.y, g_pos.z, g_cam.f.x * 100, g_cam.f.y * 100, g_cam.f.z * 100, g_cam.u.x, g_cam.u.y, g_cam.u.z);
 
 
 	glColor3f(1.f, 0., 0.);
@@ -28,6 +34,8 @@ void display() {
 
 
 	drawScene();
+
+	calculateStep();
 
 	glFlush();
 	glutSwapBuffers();
@@ -74,7 +82,6 @@ int main(int argc, char ** argv) {
 	initGlut(&argc, argv);
 	initGL();
 
-	printf("Hello, World!\n");
 	glutMainLoop();
 	return 0;
 }

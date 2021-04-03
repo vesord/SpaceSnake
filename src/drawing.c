@@ -1,7 +1,7 @@
 #include <GL/glut.h>
 
 void drawScene() {
-	GLdouble ofs = 2.; // todo config
+	GLdouble ofs = 7.; // todo config
 	glPushMatrix();
 	glBegin(GL_QUADS);
 	glColor3f(.9f, 0.2f, 2.f); // -x plane
