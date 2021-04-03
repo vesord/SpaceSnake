@@ -9,5 +9,6 @@
 
 void rotateMatVec(mat3f * mat, vec3f vec, GLfloat angle);
 void normalize(vec3f* vec);
+void transposeMat(mat3f *mat);
 
 #endif //SPACESNAKE_UTILS_H
