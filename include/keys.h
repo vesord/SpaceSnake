@@ -10,6 +10,10 @@ void doKeysActions();
 	typedef struct	s_pressedKeys {
 	char a;
 	char d;
+	char w;
+	char s;
+	char q;
+	char e;
 }				t_pressedKeys;
 
 #endif //SPACESNAKE_KEYS_H

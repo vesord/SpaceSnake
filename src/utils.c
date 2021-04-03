@@ -35,13 +35,28 @@ mat3f mulMat(mat3f *mat1, mat3f *mat2) { // todo think about optimization
 	return res;
 }
 
+void swapGLfloat(GLfloat* first, GLfloat* second) {
+	GLfloat tmp;
+
+	tmp = *first;
+	*first = *second;
+	*second = tmp;
+}
+
+
+void transposeMat(mat3f *mat) {
+	swapGLfloat(&mat->row1.y, &mat->row2.x);
+	swapGLfloat(&mat->row1.z, &mat->row3.x);
+	swapGLfloat(&mat->row2.z, &mat->row3.y);
+}
+
 /**
  * rotation is performed by rotation 3x3 matrix
  * \param mat is pointer to 3x3 matrix which would be rotated
  * \param vec normalized 3x1 vector around which rotate
  * \param angle angle
 */
-void rotateMatVec(mat3f * mat, vec3f vec, GLfloat angle) {
+void rotateMatVec(mat3f * mat, vec3f vec, GLfloat angle) { // todo think about moving getting rot matrix in another f()
 	GLfloat angCos = cosf(angle);
 	GLfloat angSin = sinf(angle);
 	mat3f rotMat;
@@ -54,5 +69,7 @@ void rotateMatVec(mat3f * mat, vec3f vec, GLfloat angle) {
 	rotMat.row3.x = (1 - angCos) * vec.z * vec.x - angSin * vec.y;
 	rotMat.row3.y	= (1 - angCos) * vec.z * vec.y + angSin * vec.x;
 	rotMat.row3.z = angCos + (1 - angCos) * vec.z * vec.z;
+	transposeMat(mat);
 	*mat = mulMat(&rotMat, mat);
+	transposeMat(mat);
 }
