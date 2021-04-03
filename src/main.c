@@ -1,6 +1,9 @@
 #include "spaceSnake.h"
 #include "drawing.h"
 #include "moving.h"
+#include "utils.h"
+
+#include <math.h>
 
 vec3f g_pos = {.x = 0.f, .y = 0.f, .z = 20.f};
 //vec3f g_vel = {.x = 0.f, .y = 0.f, .z = -1.f};
@@ -13,8 +16,8 @@ dirMat g_cam = {
 
 void key(unsigned char key, int x, int y) {
 	switch (key) {
-		case 'a': break;
-		case 'd': break;
+		case 'a': rotateMatVec((mat3f*)&g_cam, g_cam.u, M_PI / 180. * -7); break;
+		case 'd': rotateMatVec((mat3f*)&g_cam, g_cam.u, M_PI / 180. * 7); break;
 		case 'w': break;
 		case 's': break;
 		default: break;
