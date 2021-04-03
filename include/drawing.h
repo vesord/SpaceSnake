@@ -6,5 +6,7 @@
 #define SPACESNAKE_DRAWING_H
 
 void drawScene();
+void drawSnake();
+void normalize(vec3f* vec);
 
 #endif //SPACESNAKE_DRAWING_H

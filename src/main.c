@@ -20,11 +20,11 @@ void display() {
 	glColor3f(1.f, 0., 0.);
 	glutWireTeapot(1);
 
-//	drawSnake();
 	drawScene();
+//	drawSnake();
 
-	calculateStep();
 	doKeysActions();
+	calculateStep();
 
 	glFlush();
 	glutSwapBuffers();

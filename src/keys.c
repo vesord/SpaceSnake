@@ -20,6 +20,10 @@ void doKeysActions() { // todo refactor
 		rotateMatVec((mat3f*)&g_cam, g_cam.f, M_PI / 180. * -7);
 	if (g_pressedKeys.e)
 		rotateMatVec((mat3f*)&g_cam, g_cam.f, M_PI / 180. * 7);
+
+	normalize(&g_cam.f);
+	normalize(&g_cam.u);
+	normalize(&g_cam.l);
 }
 
 void keyPressed(unsigned char key, int x, int y) {

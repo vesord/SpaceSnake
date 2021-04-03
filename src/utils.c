@@ -5,6 +5,14 @@
 #include "spaceSnake.h"
 #include "math.h"
 
+void swapGLfloat(GLfloat* first, GLfloat* second) {
+	GLfloat tmp;
+
+	tmp = *first;
+	*first = *second;
+	*second = tmp;
+}
+
 static GLfloat mulMatVectors(GLfloat m1x, GLfloat m1y, GLfloat m1z, 
 							 GLfloat m2x, GLfloat m2y, GLfloat m2z) {
 	return m1x * m2x + m1y * m2y + m1z * m2z;
@@ -35,15 +43,6 @@ mat3f mulMat(mat3f *mat1, mat3f *mat2) { // todo think about optimization
 	return res;
 }
 
-void swapGLfloat(GLfloat* first, GLfloat* second) {
-	GLfloat tmp;
-
-	tmp = *first;
-	*first = *second;
-	*second = tmp;
-}
-
-
 void transposeMat(mat3f *mat) {
 	swapGLfloat(&mat->row1.y, &mat->row2.x);
 	swapGLfloat(&mat->row1.z, &mat->row3.x);
@@ -72,4 +71,11 @@ void rotateMatVec(mat3f * mat, vec3f vec, GLfloat angle) { // todo think about m
 	transposeMat(mat);
 	*mat = mulMat(&rotMat, mat);
 	transposeMat(mat);
+}
+
+void normalize(vec3f* vec) {
+	GLfloat size = sqrtf(vec->x * vec->x + vec->y * vec->y + vec->z * vec->z);
+	vec->x /= size;
+	vec->y /= size;
+	vec->z /= size;
 }
