@@ -1,13 +1,9 @@
 #include "spaceSnake.h"
 #include "drawing.h"
 #include "moving.h"
-#include "utils.h"
 #include "keys.h"
 
-#include <math.h>
-
 vec3f g_pos = {.x = 0.f, .y = 0.f, .z = 20.f};
-//vec3f g_vel = {.x = 0.f, .y = 0.f, .z = -1.f};
 
 dirMat g_cam = {
 	.f.x = 0.f, .f.y = 0.f, .f.z = -1.f,
@@ -15,44 +11,16 @@ dirMat g_cam = {
 	.l.x =1.f, .l.y =0.f, .l.z = 0.f
 };
 
-t_pressedKeys g_pressedKeys;
-
-void keyPressed(unsigned char key, int x, int y) {
-	switch (key) {
-		case 'a': g_pressedKeys.a = 1; break;
-		case 'd': g_pressedKeys.d = 1; break;
-		case 'w': g_pressedKeys.w = 1; break;
-		case 's': g_pressedKeys.s = 1; break;
-		case 'q': g_pressedKeys.q = 1; break;
-		case 'e': g_pressedKeys.e = 1; break;
-		default: break;
-	}
-}
-
-void keyReleased(unsigned char key, int x, int y) {
-	switch (key) {
-		case 'a': g_pressedKeys.a = 0; break;
-		case 'd': g_pressedKeys.d = 0; break;
-		case 'w': g_pressedKeys.w = 0; break;
-		case 's': g_pressedKeys.s = 0; break;
-		case 'q': g_pressedKeys.q = 0; break;
-		case 'e': g_pressedKeys.e = 0; break;
-		default: break;
-	}
-}
-
-
 void display() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
 	gluLookAt(g_pos.x, g_pos.y, g_pos.z, g_cam.f.x * 100, g_cam.f.y * 100, g_cam.f.z * 100, g_cam.u.x, g_cam.u.y, g_cam.u.z);
 
-
 	glColor3f(1.f, 0., 0.);
 	glutWireTeapot(1);
 
-
+//	drawSnake();
 	drawScene();
 
 	calculateStep();
@@ -81,7 +49,6 @@ void initGlut(int *argc, char ** argv) {
 	glutDisplayFunc(display);
 	glutIdleFunc(idle);
 	glutIgnoreKeyRepeat(GL_TRUE);
-//	glutKeyboardUpFunc()
 	glutKeyboardFunc(keyPressed);
 	glutKeyboardUpFunc(keyReleased);
 }
