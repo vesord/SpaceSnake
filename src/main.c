@@ -2,6 +2,7 @@
 #include "drawing.h"
 #include "moving.h"
 #include "utils.h"
+#include "keys.h"
 
 #include <math.h>
 
@@ -14,16 +15,28 @@ dirMat g_cam = {
 	.l.x =1.f, .l.y =0.f, .l.z = 0.f
 };
 
-void key(unsigned char key, int x, int y) {
+t_pressedKeys g_pressedKeys;
+
+void keyPressed(unsigned char key, int x, int y) {
 	switch (key) {
-		case 'a': rotateMatVec((mat3f*)&g_cam, g_cam.u, M_PI / 180. * -7); break;
-		case 'd': rotateMatVec((mat3f*)&g_cam, g_cam.u, M_PI / 180. * 7); break;
+		case 'a': g_pressedKeys.a = 1; break;
+		case 'd': g_pressedKeys.d = 1; break;
 		case 'w': break;
 		case 's': break;
 		default: break;
 	}
-
 }
+
+void keyReleased(unsigned char key, int x, int y) {
+	switch (key) {
+		case 'a': g_pressedKeys.a = 0; break;
+		case 'd': g_pressedKeys.d = 0; break;
+		case 'w': break;
+		case 's': break;
+		default: break;
+	}
+}
+
 
 void display() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -39,6 +52,7 @@ void display() {
 	drawScene();
 
 	calculateStep();
+	doKeysActions();
 
 	glFlush();
 	glutSwapBuffers();
@@ -62,7 +76,10 @@ void initGlut(int *argc, char ** argv) {
 	glutReshapeFunc(reshape);
 	glutDisplayFunc(display);
 	glutIdleFunc(idle);
-	glutKeyboardFunc(key);
+	glutIgnoreKeyRepeat(GL_TRUE);
+//	glutKeyboardUpFunc()
+	glutKeyboardFunc(keyPressed);
+	glutKeyboardUpFunc(keyReleased);
 }
 
 void initGL() {
