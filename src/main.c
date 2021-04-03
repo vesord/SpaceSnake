@@ -21,7 +21,7 @@ void display() {
 	glutWireTeapot(1);
 
 	drawScene();
-//	drawSnake();
+	drawSnake();
 
 	doKeysActions();
 	calculateStep();
