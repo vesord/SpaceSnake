@@ -73,15 +73,20 @@ static void magicallyRotateCam() {
 
 void drawSnake() {
 	glPushMatrix();
+	glColor3f(0.f, 0.f, 0.f);
 
 	glTranslatef(g_pos.x, g_pos.y, g_pos.z); // go to camera
 	magicallyRotateCam();
-	glTranslatef(0.f, -3.f, -10.f); // point from camera where start drawing snake
+	glTranslatef(-g_pos.x, -g_pos.y, -g_pos.z);
+//	glTranslatef(0.f, -3.f, -10.f); // point from camera where start drawing snake
 
 	t_listSnake *body = g_snake;
+
 	for (; body; body = body->next) {
+		glPushMatrix();
 		glTranslatef(body->pos.x, body->pos.y, body->pos.z);
 		glutWireSphere(1, 10, 10);
+		glPopMatrix();
 	}
 
 	glPopMatrix();

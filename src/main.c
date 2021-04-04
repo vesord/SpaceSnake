@@ -26,8 +26,8 @@ void display() {
 	drawScene();
 	drawSnake();
 
-	doKeysActions();
 	calculateStep();
+	doKeysActions();
 
 	glFlush();
 	glutSwapBuffers();
@@ -75,32 +75,36 @@ void initGL() {
 void initSnake() {
 	g_snake = malloc(sizeof *g_snake);
 	g_snake->pos.x = 0.f;
-	g_snake->pos.y = 0.f;
-	g_snake->pos.z = 0.f;
+	g_snake->pos.y = -3.f;
+	g_snake->pos.z = 5.f;
 	g_snake->next = NULL;
 
 	// todo: delete
 	t_listSnake *tmp;
+	t_listSnake *prev;
+	prev = g_snake;
 
 	tmp = malloc(sizeof *g_snake);
 	tmp->next = NULL;
-	tmp->pos.x = 0.f;
-	tmp->pos.y = 0.f;
-	tmp->pos.z = 1.5f;
+	tmp->pos.x = prev->pos.x;
+	tmp->pos.y = prev->pos.y;
+	tmp->pos.z = prev->pos.z + 1.5;
 	g_snake->next = tmp;
+	prev = tmp;
 
 	tmp = malloc(sizeof *g_snake);
 	tmp->next = NULL;
-	tmp->pos.x = 0.f;
-	tmp->pos.y = 0.f;
-	tmp->pos.z = 1.5f;
+	tmp->pos.x = prev->pos.x;
+	tmp->pos.y = prev->pos.y;
+	tmp->pos.z = prev->pos.z + 1.5;
 	g_snake->next->next = tmp;
+	prev = tmp;
 
 	tmp = malloc(sizeof *g_snake);
 	tmp->next = NULL;
-	tmp->pos.x = 0.f;
-	tmp->pos.y = 0.f;
-	tmp->pos.z = 1.5f;
+	tmp->pos.x = prev->pos.x;
+	tmp->pos.y = prev->pos.y;
+	tmp->pos.z = prev->pos.z + 1.5;
 	g_snake->next->next->next = tmp;
 
 	// todo end delete
