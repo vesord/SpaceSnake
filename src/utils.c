@@ -79,3 +79,17 @@ void normalize(vec3f* vec) {
 	vec->y /= size;
 	vec->z /= size;
 }
+
+float randFloat() {
+	return (float)(rand()) / (float)(RAND_MAX);
+}
+
+vec3f randVec3fRange(GLfloat min, GLfloat max) {
+	vec3f res;
+	GLfloat rng = max - min;
+
+	res.x = max - randFloat() * rng;
+	res.y = max - randFloat() * rng;
+	res.z = max - randFloat() * rng;
+	return res;
+}

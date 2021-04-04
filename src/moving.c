@@ -3,7 +3,7 @@
 
 extern vec3f g_pos;
 extern dirMat g_cam;
-extern t_listSnake *g_snake;
+extern t_listPos *g_snake;
 
 static void calcCamStep(GLfloat step) {
 	g_pos.x += g_cam.f.x * step;
@@ -12,8 +12,8 @@ static void calcCamStep(GLfloat step) {
 }
 
 static void calcSnakeStep(GLfloat step) {
-	t_listSnake *body = g_snake;
-	t_listSnake *prev;
+	t_listPos *body = g_snake;
+	t_listPos *prev;
 
 	body->pos.x += g_cam.f.x * step;
 	body->pos.y += g_cam.f.y * step;

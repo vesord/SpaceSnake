@@ -12,7 +12,9 @@ dirMat g_cam = {
 	.l.x =1.f, .l.y =0.f, .l.z = 0.f
 };
 
-t_listSnake* g_snake = NULL;
+t_listPos* g_snake = NULL;	// todo change pos list to (void* data) list
+t_listPos* g_fruits = NULL;
+
 
 void display() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -27,6 +29,7 @@ void display() {
 
 	drawScene();
 	drawSnake();
+	drawFruits();
 
 	calculateStep();
 	doKeysActions();
@@ -82,8 +85,8 @@ void initSnake() {
 	g_snake->next = NULL;
 
 	// todo: delete
-	t_listSnake *tmp;
-	t_listSnake *prev;
+	t_listPos *tmp;
+	t_listPos *prev;
 	prev = g_snake;
 
 	tmp = malloc(sizeof *g_snake);
@@ -112,10 +115,27 @@ void initSnake() {
 	// todo end delete
 }
 
+void initFruits() {
+	t_listPos *fruit;
+
+	for (int i = 0; i < 10; ++i) { // todo config initial fruit count
+		fruit = malloc(sizeof *fruit);
+		fruit->next = NULL;
+		fruit->pos = randVec3fRange(-40.f, 40.f); // todo config fruits depends on game field
+		if (g_fruits) {
+			fruit->next = g_fruits;
+			g_fruits = fruit;
+		} else {
+			g_fruits = fruit;
+		}
+	}
+}
+
 int main(int argc, char ** argv) {
 	initGlut(&argc, argv);
 	initGL();
 	initSnake();
+	initFruits();
 
 	glutMainLoop();
 	return 0;
