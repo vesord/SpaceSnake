@@ -3,7 +3,7 @@
 #include "moving.h"
 #include "keys.h"
 
-extern dirMat g_cam;
+extern mat3f g_cam;
 extern t_globalConfiguration cnf;
 
 void locateLight() {
@@ -18,9 +18,9 @@ void display() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
-	gluLookAt(cnf.snake->pos.x - g_cam.f.x * 10 + g_cam.u.x * 4, cnf.snake->pos.y - g_cam.f.y * 10 + g_cam.u.y * 4, cnf.snake->pos.z - g_cam.f.z * 10 + g_cam.u.z * 4,
+	gluLookAt(cnf.snake->pos.x - g_cam.r1.x * 10 + g_cam.r2.x * 4, cnf.snake->pos.y - g_cam.r1.y * 10 + g_cam.r2.y * 4, cnf.snake->pos.z - g_cam.r1.z * 10 + g_cam.r2.z * 4,
 			  cnf.snake->pos.x, cnf.snake->pos.y, cnf.snake->pos.z,
-			  g_cam.u.x, g_cam.u.y, g_cam.u.z);
+			  g_cam.r2.x, g_cam.r2.y, g_cam.r2.z);
 
 	drawSkyBox();
 	drawScene();

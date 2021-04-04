@@ -15,16 +15,10 @@ typedef struct	s_vec3f {
 }				vec3f;
 
 typedef struct	s_mat3f {
-	vec3f row1;
-	vec3f row2;
-	vec3f row3;
+	vec3f r1;
+	vec3f r2;
+	vec3f r3;
 }				mat3f;
-
-typedef struct	s_directionMat {
-	vec3f f;	// forward
-	vec3f u;	// up
-	vec3f l;	// left
-}				dirMat;
 
 typedef struct	s_listPos {
 	struct s_listPos*	next;

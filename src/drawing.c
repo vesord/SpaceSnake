@@ -1,7 +1,7 @@
 #include "spaceSnake.h"
 #include "materials.h"
 
-extern dirMat g_cam;
+extern mat3f g_cam;
 extern GLuint g_texSun;
 extern GLuint g_texSpace;
 extern t_globalConfiguration cnf;

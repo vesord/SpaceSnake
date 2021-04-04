@@ -4,10 +4,10 @@
 #include "moving.h"
 #include "bmp.h"
 
-dirMat g_cam = {
-	.f.x = 0.f, .f.y = 0.f, .f.z = -1.f,
-	.u.x = 0.f, .u.y = 1.f, .u.z = 0.f,
-	.l.x =1.f, .l.y =0.f, .l.z = 0.f
+mat3f g_cam = {
+	.r1.x = 0.f, .r1.y = 0.f, .r1.z = -1.f,		// forward
+	.r2.x = 0.f, .r2.y = 1.f, .r2.z = 0.f,		// up
+	.r3.x =1.f, .r3.y =0.f, .r3.z = 0.f			// right
 };
 
 GLuint g_texSun;

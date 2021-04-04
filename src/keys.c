@@ -3,27 +3,27 @@
 #include "utils.h"
 #include <math.h>
 
-extern dirMat g_cam;
+extern mat3f g_cam;
 
 t_pressedKeys g_pressedKeys;
 
 void doKeysActions() { // todo refactor
 	if (g_pressedKeys.a)
-		rotateMatVec((mat3f*)&g_cam, g_cam.u, M_PI / 180. * 3);
+		rotateMatVec((mat3f*)&g_cam, g_cam.r2, M_PI / 180. * 3);
 	if (g_pressedKeys.d)
-		rotateMatVec((mat3f*)&g_cam, g_cam.u, M_PI / 180. * -3);
+		rotateMatVec((mat3f*)&g_cam, g_cam.r2, M_PI / 180. * -3);
 	if (g_pressedKeys.w)
-		rotateMatVec((mat3f*)&g_cam, g_cam.l, M_PI / 180. * -3);
+		rotateMatVec((mat3f*)&g_cam, g_cam.r3, M_PI / 180. * -3);
 	if (g_pressedKeys.s)
-		rotateMatVec((mat3f*)&g_cam, g_cam.l, M_PI / 180. * 3);
+		rotateMatVec((mat3f*)&g_cam, g_cam.r3, M_PI / 180. * 3);
 	if (g_pressedKeys.q)
-		rotateMatVec((mat3f*)&g_cam, g_cam.f, M_PI / 180. * -3);
+		rotateMatVec((mat3f*)&g_cam, g_cam.r1, M_PI / 180. * -3);
 	if (g_pressedKeys.e)
-		rotateMatVec((mat3f*)&g_cam, g_cam.f, M_PI / 180. * 3);
+		rotateMatVec((mat3f*)&g_cam, g_cam.r1, M_PI / 180. * 3);
 
-	normalize(&g_cam.f);
-	normalize(&g_cam.u);
-	normalize(&g_cam.l);
+	normalize(&g_cam.r1);
+	normalize(&g_cam.r2);
+	normalize(&g_cam.r3);
 }
 
 void keyPressed(unsigned char key, int x, int y) {

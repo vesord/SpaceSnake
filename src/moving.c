@@ -1,22 +1,22 @@
 #include "spaceSnake.h"
 #include "utils.h"
 
-extern dirMat g_cam;
+extern mat3f g_cam;
 extern t_globalConfiguration cnf;
 
 static void calcCamStep(GLfloat step) {
-	cnf.snake->pos.x += g_cam.f.x * step;
-	cnf.snake->pos.y += g_cam.f.y * step;
-	cnf.snake->pos.z += g_cam.f.z * step;
+	cnf.snake->pos.x += g_cam.r1.x * step;
+	cnf.snake->pos.y += g_cam.r1.y * step;
+	cnf.snake->pos.z += g_cam.r1.z * step;
 }
 
 static void calcSnakeStep(GLfloat step) {
 	t_listPos *body = cnf.snake;
 	t_listPos *prev;
 
-	body->pos.x += g_cam.f.x * step;
-	body->pos.y += g_cam.f.y * step;
-	body->pos.z += g_cam.f.z * step;
+	body->pos.x += g_cam.r1.x * step;
+	body->pos.y += g_cam.r1.y * step;
+	body->pos.z += g_cam.r1.z * step;
 	prev = body;
 	body = body->next;
 
