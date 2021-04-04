@@ -12,7 +12,7 @@ extern t_listPos* g_fruits;
 
 void locateLight() {
 	glPushMatrix();
-	GLfloat lightPos[] = {0.0, 200.0, 0.0, 1.0};
+	GLfloat lightPos[] = {0.0, 0.0, 100.0, 1.0};
 
 	glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 	glPopMatrix();
@@ -26,16 +26,10 @@ void display() {
 			  g_pos.x, g_pos.y, g_pos.z,
 			  g_cam.u.x, g_cam.u.y, g_cam.u.z);
 
-	// todo delete this
-	glColor3f(1.f, 0., 0.);
-	glutWireTeapot(1);
-	// todo end delete
-
 	drawSkyBox();
 	drawScene();
 	drawSnake();
 	drawFruits();
-
 	locateLight();
 
 	calculateStep();

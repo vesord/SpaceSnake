@@ -14,7 +14,7 @@ void fixImage(unsigned char * image, int width, int height, int channels) {
 	}
 }
 
-unsigned char *myBMPLoader(const char *filename, int *width, int *height) {
+unsigned char *myBMPLoader(const char *filename, int *width, int *height, int *channels) {
 	int fd;
 	t_bmp_file_header	bfh;
 	t_bmp_info			bmi;
@@ -52,5 +52,6 @@ unsigned char *myBMPLoader(const char *filename, int *width, int *height) {
 	close(fd);
 	*width = bmi.width;
 	*height = bmi.height;
+	*channels = bmi.btp >> 3;
 	return data;
 }

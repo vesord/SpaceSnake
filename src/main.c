@@ -87,7 +87,18 @@ void initSnake() {
 }
 
 void initLight() {
-//	glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
+	GLfloat myAmbient[] = {1, 1, 1, 1.};
+	GLfloat myDiffuse[] = {1., 1., 1., 1.};
+	GLfloat mySpecular[] = {1., 1., 1., 1.};
+	glLightfv(GL_LIGHT0, GL_AMBIENT, myAmbient);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, myDiffuse);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, mySpecular);
+
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+
+/*
+	glEnable(GL_LIGHTING);
 	GLfloat myAmbient[] = {.1, .1, .1, 1.};
 	GLfloat myDiffuse[] = {1., 1., 1., 1.};
 	GLfloat mySpecular[] = {1., 1., 1., 1.};
@@ -95,7 +106,7 @@ void initLight() {
 	glLightfv(GL_LIGHT0, GL_AMBIENT, myAmbient);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, myDiffuse);
 	glLightfv(GL_LIGHT0, GL_SPECULAR, mySpecular);
-	glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHT0);*/
 
 /*	glLightfv(GL_LIGHT1, GL_AMBIENT, myAmbient);
 	glLightfv(GL_LIGHT1, GL_DIFFUSE, myDiffuse);
@@ -122,38 +133,37 @@ void initLight() {
 	glLightfv(GL_LIGHT5, GL_SPECULAR, mySpecular);
 	glEnable(GL_LIGHT5);*/
 
-	glEnable(GL_LIGHTING);
+
 }
 
 void initTexture(const char *filename, GLuint *texture) {
 	glGenTextures(1, texture);
-	glBindTexture (GL_TEXTURE_2D, *texture);
+	glBindTexture(GL_TEXTURE_2D, *texture);
 
-	int width, height;
-	unsigned char* image = myBMPLoader(filename, &width, &height);
+	int width, height, channels;
+	unsigned char* image = myBMPLoader(filename, &width, &height, &channels);
 	if (!image)
 		exit(1);
 
-	fixImage(image, width, height, 4);
-	gluBuild2DMipmaps(GL_TEXTURE_2D, 4, width, height, GL_RGBA, GL_UNSIGNED_BYTE, image);
+	fixImage(image, width, height, channels);
+	gluBuild2DMipmaps(GL_TEXTURE_2D, channels, width, height, channels == 4 ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, image);
 	free(image);
 
-//	glBindTexture (GL_TEXTURE_2D, 0);
+	glBindTexture (GL_TEXTURE_2D, 0);
 }
 
 void initTextures() {
 	glEnable(GL_TEXTURE_2D);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
-//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_NEAREST);
 	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
 	initTexture("./textures/Star.bmp", &g_texSpace);
-//	initTexture("./textures/Moon.bmp", &g_texSun);
+	initTexture("./textures/Moon.bmp", &g_texSun);
+	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 int main(int argc, char ** argv) {

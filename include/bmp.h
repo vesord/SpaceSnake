@@ -25,7 +25,7 @@ typedef struct	s_bmp_info
 	int		color_table_size;
 }				t_bmp_info;
 
-unsigned char *myBMPLoader(const char *filename, int *width, int *height);
+unsigned char *myBMPLoader(const char *filename, int *width, int *height, int *channels);
 void fixImage(unsigned char * image, int width, int height, int channels);
 
 #endif //SPACESNAKE_BMP_H
