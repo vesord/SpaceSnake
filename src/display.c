@@ -26,8 +26,6 @@ void display() {
 			  g_pos.x, g_pos.y, g_pos.z,
 			  g_cam.u.x, g_cam.u.y, g_cam.u.z);
 
-	locateLight();
-
 	// todo delete this
 	glColor3f(1.f, 0., 0.);
 	glutWireTeapot(1);
@@ -37,6 +35,8 @@ void display() {
 	drawScene();
 	drawSnake();
 	drawFruits();
+
+	locateLight();
 
 	calculateStep();
 	doKeysActions();

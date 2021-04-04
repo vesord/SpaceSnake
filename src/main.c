@@ -35,7 +35,7 @@ void initGlut(int *argc, char ** argv) {
 
 void initGL() {
 	glClearColor(.3f, .3f, .3f, 1.f);
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_NORMALIZE);
 	glEnable(GL_CULL_FACE);
@@ -43,7 +43,7 @@ void initGL() {
 	glViewport(0, 0, 640, 640); // todo add config window size
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(60., 1., 2., 200.); // todo add config fov aspect
+	gluPerspective(60., 1., 2., 2000.); // todo add config fov aspect
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
@@ -87,8 +87,8 @@ void initSnake() {
 }
 
 void initLight() {
-	glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
-	GLfloat myAmbient[] = {.01, .01, .01, 1.};
+//	glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
+	GLfloat myAmbient[] = {.1, .1, .1, 1.};
 	GLfloat myDiffuse[] = {1., 1., 1., 1.};
 	GLfloat mySpecular[] = {1., 1., 1., 1.};
 
@@ -138,18 +138,22 @@ void initTexture(const char *filename, GLuint *texture) {
 	gluBuild2DMipmaps(GL_TEXTURE_2D, 4, width, height, GL_RGBA, GL_UNSIGNED_BYTE, image);
 	free(image);
 
-	glBindTexture (GL_TEXTURE_2D, 0);
+//	glBindTexture (GL_TEXTURE_2D, 0);
 }
 
 void initTextures() {
 	glEnable(GL_TEXTURE_2D);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-	initTexture("Star.bmp", &g_texSpace);
-	initTexture("Moon.bmp", &g_texSun);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_NEAREST);
+	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+
+	initTexture("./textures/Star.bmp", &g_texSpace);
+//	initTexture("./textures/Moon.bmp", &g_texSun);
 }
 
 int main(int argc, char ** argv) {
