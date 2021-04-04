@@ -4,16 +4,15 @@
 #include "moving.h"
 #include "bmp.h"
 
-mat3f g_cam = {
-	.r1.x = 0.f, .r1.y = 0.f, .r1.z = -1.f,		// forward
-	.r2.x = 0.f, .r2.y = 1.f, .r2.z = 0.f,		// up
-	.r3.x =1.f, .r3.y =0.f, .r3.z = 0.f			// right
-};
-
 GLuint g_texSun;
 GLuint g_texSpace;
 
-t_globalConfiguration cnf = {.snake = NULL, .fruits = NULL};
+t_globalConfiguration cnf = {.snake = NULL, .fruits = NULL,
+							 .cam = {
+								 .r1.x = 0.f, .r1.y = 0.f, .r1.z = -1.f,	// forward
+								 .r2.x = 0.f, .r2.y = 1.f, .r2.z = 0.f,		// up
+								 .r3.x =1.f, .r3.y =0.f, .r3.z = 0.f		// right
+							 }};
 
 void initGlut(int *argc, char ** argv) {
 	glutInit(argc, argv);

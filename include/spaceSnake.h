@@ -29,6 +29,7 @@ typedef struct	s_listPos {
 typedef struct	s_globalConfiguration {
 	t_listPos *snake;			// todo change pos list to (void* data) list
 	t_listPos *fruits;
+	mat3f cam;
 }				t_globalConfiguration;
 
 #endif //SPACESNAKE_SPACESNAKE_H
