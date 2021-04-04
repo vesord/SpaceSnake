@@ -18,8 +18,7 @@ void display() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
-//	gluLookAt(g_pos.x, g_pos.y, g_pos.z, g_cam.f.x * 1000000, g_cam.f.y * 1000000, g_cam.f.z * 1000000, g_cam.u.x, g_cam.u.y, g_cam.u.z);
-	gluLookAt(g_pos.x - g_cam.f.x * 10 + g_cam.u.x * 3, g_pos.y - g_cam.f.y * 10 + g_cam.u.y * 3, g_pos.z - g_cam.f.z * 10 + g_cam.u.y * 3,
+	gluLookAt(g_pos.x - g_cam.f.x * 10 + g_cam.u.x * 4, g_pos.y - g_cam.f.y * 10 + g_cam.u.y * 4, g_pos.z - g_cam.f.z * 10 + g_cam.u.z * 4,
 		   g_pos.x, g_pos.y, g_pos.z,
 		   g_cam.u.x, g_cam.u.y, g_cam.u.z);
 
