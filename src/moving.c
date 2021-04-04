@@ -1,15 +1,14 @@
 #include "spaceSnake.h"
 #include "utils.h"
 
-extern vec3f g_pos;
 extern dirMat g_cam;
 extern t_listPos *g_snake;
 extern t_listPos *g_fruits;
 
 static void calcCamStep(GLfloat step) {
-	g_pos.x += g_cam.f.x * step;
-	g_pos.y += g_cam.f.y * step;
-	g_pos.z += g_cam.f.z * step;
+	g_snake->pos.x += g_cam.f.x * step;
+	g_snake->pos.y += g_cam.f.y * step;
+	g_snake->pos.z += g_cam.f.z * step;
 }
 
 static void calcSnakeStep(GLfloat step) {

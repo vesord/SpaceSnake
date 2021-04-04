@@ -5,8 +5,6 @@
 #include "moving.h"
 #include "bmp.h"
 
-vec3f g_pos = {.x = 0.f, .y = 0.f, .z = 20.f};
-
 dirMat g_cam = {
 	.f.x = 0.f, .f.y = 0.f, .f.z = -1.f,
 	.u.x = 0.f, .u.y = 1.f, .u.z = 0.f,

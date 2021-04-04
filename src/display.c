@@ -5,8 +5,6 @@
 #include "keys.h"
 
 extern dirMat g_cam;
-extern vec3f g_pos;
-
 extern t_listPos* g_snake;
 extern t_listPos* g_fruits;
 
@@ -22,8 +20,8 @@ void display() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
-	gluLookAt(g_pos.x - g_cam.f.x * 10 + g_cam.u.x * 4, g_pos.y - g_cam.f.y * 10 + g_cam.u.y * 4, g_pos.z - g_cam.f.z * 10 + g_cam.u.z * 4,
-			  g_pos.x, g_pos.y, g_pos.z,
+	gluLookAt(g_snake->pos.x - g_cam.f.x * 10 + g_cam.u.x * 4, g_snake->pos.y - g_cam.f.y * 10 + g_cam.u.y * 4, g_snake->pos.z - g_cam.f.z * 10 + g_cam.u.z * 4,
+			  g_snake->pos.x, g_snake->pos.y, g_snake->pos.z,
 			  g_cam.u.x, g_cam.u.y, g_cam.u.z);
 
 	drawSkyBox();

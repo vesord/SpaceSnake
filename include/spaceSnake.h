@@ -25,4 +25,8 @@ typedef struct	s_directionMat {
 	vec3f l;	// left
 }				dirMat;
 
+typedef struct	s_globalConfiguration {
+
+}				t_globalConfiguration;
+
 #endif //SPACESNAKE_SPACESNAKE_H
