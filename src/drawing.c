@@ -46,13 +46,14 @@ void drawScene() {
 
 void drawSnake() {
 	glPushMatrix();
-	glColor3f(0.f, 0.f, 0.f);
+	glColor3f(0.04f, 0.08f, 0.3f);
 
 	t_listPos *body = g_snake;
 	for (; body; body = body->next) {
 		glPushMatrix();
 		glTranslatef(body->pos.x, body->pos.y, body->pos.z);
-		glutWireSphere(1, 10, 10);		// todo configure snake size
+//		glutWireSphere(1, 10, 10);		// todo configure snake size
+		glutSolidSphere(1, 50, 50);		// todo configure snake size
 		glPopMatrix();
 	}
 	glPopMatrix();
@@ -61,10 +62,12 @@ void drawSnake() {
 void drawFruits() {
 	t_listPos *fruit = g_fruits;
 
+	glColor3f(0.6f, 0.1f, 0.3f);
 	for (; fruit; fruit = fruit->next) {
 		glPushMatrix();
 		glTranslatef(fruit->pos.x, fruit->pos.y, fruit->pos.z);
-		glutWireTorus(0.3, 0.6, 10, 10); // todo config fruit size
+//		glutWireTorus(0.3, 0.6, 10, 10); // todo config fruit size
+		glutSolidTorus(0.3, 0.6, 10, 10); // todo config fruit size
 		glPopMatrix();
 	}
 }

@@ -3,6 +3,7 @@
 #include "moving.h"
 #include "keys.h"
 #include "utils.h"
+#include "materials.h"
 
 vec3f g_pos = {.x = 0.f, .y = 0.f, .z = 20.f};
 
@@ -15,10 +16,19 @@ dirMat g_cam = {
 t_listPos* g_snake = NULL;	// todo change pos list to (void* data) list
 t_listPos* g_fruits = NULL;
 
+void locateLight() {
+	glPushMatrix();
+	GLfloat lightPos[] = {0.0, 0.0, 0.0, 1.0};
+
+	glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+	glPopMatrix();
+}
 
 void display() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
+
+	locateLight();
 
 	gluLookAt(g_pos.x - g_cam.f.x * 10 + g_cam.u.x * 4, g_pos.y - g_cam.f.y * 10 + g_cam.u.y * 4, g_pos.z - g_cam.f.z * 10 + g_cam.u.z * 4,
 		   g_pos.x, g_pos.y, g_pos.z,
@@ -67,12 +77,11 @@ void initGL() {
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_NORMALIZE);
 	glEnable(GL_CULL_FACE);
-	glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE); // todo probably true
 
-	glViewport(0, 0, 640, 640); // todo add config
+	glViewport(0, 0, 640, 640); // todo add config window size
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(60., 1., 2., 200.); // todo add config
+	gluPerspective(60., 1., 2., 200.); // todo add config fov aspect
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
@@ -115,11 +124,56 @@ void initSnake() {
 	// todo end delete
 }
 
+void initLight() {
+//	glDisable(GL_TEXTURE_3D);
+
+	glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
+	GLfloat myAmbient[] = {1., 1., 1., 1.};
+	GLfloat myDiffuse[] = {1., 1., 1., 1.};
+	GLfloat mySpecular[] = {1., 1., 1., 1.};
+
+	glLightfv(GL_LIGHT0, GL_AMBIENT, myAmbient);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, myDiffuse);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, mySpecular);
+	glEnable(GL_LIGHT0);
+
+/*	glLightfv(GL_LIGHT1, GL_AMBIENT, myAmbient);
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, myDiffuse);
+	glLightfv(GL_LIGHT1, GL_SPECULAR, mySpecular);
+	glEnable(GL_LIGHT1);
+
+	glLightfv(GL_LIGHT2, GL_AMBIENT, myAmbient);
+	glLightfv(GL_LIGHT2, GL_DIFFUSE, myDiffuse);
+	glLightfv(GL_LIGHT2, GL_SPECULAR, mySpecular);
+	glEnable(GL_LIGHT2);
+
+	glLightfv(GL_LIGHT3, GL_AMBIENT, myAmbient);
+	glLightfv(GL_LIGHT3, GL_DIFFUSE, myDiffuse);
+	glLightfv(GL_LIGHT3, GL_SPECULAR, mySpecular);
+	glEnable(GL_LIGHT3);
+
+	glLightfv(GL_LIGHT4, GL_AMBIENT, myAmbient);
+	glLightfv(GL_LIGHT4, GL_DIFFUSE, myDiffuse);
+	glLightfv(GL_LIGHT4, GL_SPECULAR, mySpecular);
+	glEnable(GL_LIGHT4);
+
+	glLightfv(GL_LIGHT5, GL_AMBIENT, myAmbient);
+	glLightfv(GL_LIGHT5, GL_DIFFUSE, myDiffuse);
+	glLightfv(GL_LIGHT5, GL_SPECULAR, mySpecular);
+	glEnable(GL_LIGHT5);*/
+
+	glEnable(GL_LIGHTING);
+}
+
 int main(int argc, char ** argv) {
 	initGlut(&argc, argv);
 	initGL();
+	initLight();
 	initSnake();
 	addFruits(10); // todo config initial fruit count
+
+	applyMaterial(GL_BACK, MATERIAL_PERL);
+	applyMaterial(GL_FRONT, MATERIAL_CHROME);
 
 	glutMainLoop();
 	return 0;

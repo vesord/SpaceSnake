@@ -86,10 +86,9 @@ void addFruits(GLint count) {
 }
 void checkFruitEating() {
 	t_listPos *fruit = g_fruits;
-	GLfloat tmp; // todo delete this
 
 	for (; fruit; fruit = fruit->next) {
-		if ((tmp = distance(g_snake->pos, fruit->pos)) < 1.5 + 0.6)  { // todo config fruit size and snake size
+		if (distance(g_snake->pos, fruit->pos) < 1.5 + 0.6)  { // todo config fruit size and snake size
 			snakeGrow();
 			fruitDelete(fruit);
 			addFruits(1);
