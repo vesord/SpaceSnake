@@ -1,12 +1,10 @@
 #include "spaceSnake.h"
-#include <math.h>
-
 #include "utils.h"
-#include <stdlib.h>
 #include <string.h>
 
 extern vec3f g_pos;
 extern dirMat g_cam;
+extern t_listSnake *g_snake;
 
 typedef struct s_vec4f {
 	GLfloat x;
@@ -60,26 +58,31 @@ void drawScene() {
 	glPopMatrix();
 }
 
-void drawSnake() {
-	glPushMatrix();
-
-	glTranslatef(g_pos.x, g_pos.y, g_pos.z);
-
+static void magicallyRotateCam() {
 	mat3f trCam = *((mat3f*)&g_cam);
 	transposeMat(&trCam);
-
 	mat4f m;
 	memset(&m, 0, sizeof(m));
 	memcpy(&m.row1, &g_cam.f, sizeof(g_cam.f));
 	memcpy(&m.row2, &g_cam.u, sizeof(g_cam.u));
 	memcpy(&m.row3, &g_cam.l, sizeof(g_cam.l));
 	m.row4.w = 1;
-
 	glMultMatrixf((GLfloat*)&m);
 	glRotatef(90.f, 0.f, -1.f, 0.f);
+}
 
-	glTranslatef(0.f, -1.f, -5.f);
+void drawSnake() {
+	glPushMatrix();
 
-	glutWireSphere(1, 10, 10);
+	glTranslatef(g_pos.x, g_pos.y, g_pos.z); // go to camera
+	magicallyRotateCam();
+	glTranslatef(0.f, -3.f, -10.f); // point from camera where start drawing snake
+
+	t_listSnake *body = g_snake;
+	for (; body; body = body->next) {
+		glTranslatef(body->pos.x, body->pos.y, body->pos.z);
+		glutWireSphere(1, 10, 10);
+	}
+
 	glPopMatrix();
 }

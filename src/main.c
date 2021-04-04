@@ -2,6 +2,7 @@
 #include "drawing.h"
 #include "moving.h"
 #include "keys.h"
+#include "utils.h"
 
 vec3f g_pos = {.x = 0.f, .y = 0.f, .z = 20.f};
 
@@ -10,6 +11,8 @@ dirMat g_cam = {
 	.u.x = 0.f, .u.y = 1.f, .u.z = 0.f,
 	.l.x =1.f, .l.y =0.f, .l.z = 0.f
 };
+
+t_listSnake* g_snake = NULL;
 
 void display() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -69,9 +72,44 @@ void initGL() {
 	glLoadIdentity();
 }
 
+void initSnake() {
+	g_snake = malloc(sizeof *g_snake);
+	g_snake->pos.x = 0.f;
+	g_snake->pos.y = 0.f;
+	g_snake->pos.z = 0.f;
+	g_snake->next = NULL;
+
+	// todo: delete
+	t_listSnake *tmp;
+
+	tmp = malloc(sizeof *g_snake);
+	tmp->next = NULL;
+	tmp->pos.x = 0.f;
+	tmp->pos.y = 0.f;
+	tmp->pos.z = 1.5f;
+	g_snake->next = tmp;
+
+	tmp = malloc(sizeof *g_snake);
+	tmp->next = NULL;
+	tmp->pos.x = 0.f;
+	tmp->pos.y = 0.f;
+	tmp->pos.z = 1.5f;
+	g_snake->next->next = tmp;
+
+	tmp = malloc(sizeof *g_snake);
+	tmp->next = NULL;
+	tmp->pos.x = 0.f;
+	tmp->pos.y = 0.f;
+	tmp->pos.z = 1.5f;
+	g_snake->next->next->next = tmp;
+
+	// todo end delete
+}
+
 int main(int argc, char ** argv) {
 	initGlut(&argc, argv);
 	initGL();
+	initSnake();
 
 	glutMainLoop();
 	return 0;

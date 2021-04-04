@@ -7,6 +7,11 @@
 
 #include "spaceSnake.h"
 
+typedef struct	s_listSnake {
+	struct s_listSnake*	next;
+	vec3f				pos;
+}				t_listSnake;
+
 void rotateMatVec(mat3f * mat, vec3f vec, GLfloat angle);
 void normalize(vec3f* vec);
 void transposeMat(mat3f *mat);
