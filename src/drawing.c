@@ -65,26 +65,21 @@ void drawSnake() {
 
 	glTranslatef(g_pos.x, g_pos.y, g_pos.z);
 
-
 	mat3f trCam = *((mat3f*)&g_cam);
 	transposeMat(&trCam);
-	trCam.row1.x *= -1;
-	trCam.row1.y *= -1;
-	trCam.row1.z *= -1;
 
 	mat4f m;
 	memset(&m, 0, sizeof(m));
 	memcpy(&m.row1, &g_cam.f, sizeof(g_cam.f));
-	memcpy(&m.row2, &g_cam.u, sizeof(g_cam.f));
-	memcpy(&m.row3, &g_cam.l, sizeof(g_cam.f));
+	memcpy(&m.row2, &g_cam.u, sizeof(g_cam.u));
+	memcpy(&m.row3, &g_cam.l, sizeof(g_cam.l));
 	m.row4.w = 1;
 
 	glMultMatrixf((GLfloat*)&m);
+	glRotatef(90.f, 0.f, -1.f, 0.f);
 
-//	GLfloat angle = acosf(-g_cam.f.z) / M_PI * 180.f;
-//	glRotatef(angle, 0, 1.f, 0);
+	glTranslatef(0.f, -1.f, -5.f);
 
-//	glutWireSphere(5.f, 10, 10);
-	glutWireTeapot(4);
+	glutWireSphere(1, 10, 10);
 	glPopMatrix();
 }
