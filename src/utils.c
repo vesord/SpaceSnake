@@ -1,7 +1,3 @@
-//
-// Created by vesord on 03.04.2021.
-//
-
 #include "spaceSnake.h"
 #include "math.h"
 
@@ -92,4 +88,10 @@ vec3f randVec3fRange(GLfloat min, GLfloat max) {
 	res.y = max - randFloat() * rng;
 	res.z = max - randFloat() * rng;
 	return res;
+}
+
+GLfloat distance(vec3f v1, vec3f v2) {
+	return sqrtf((v1.x - v2.x) * (v1.x - v2.x)
+				  + (v1.y - v2.y) * (v1.y - v2.y)
+				  + (v1.z - v2.z) * (v1.z - v2.z));
 }

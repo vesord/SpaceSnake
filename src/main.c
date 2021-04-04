@@ -115,27 +115,11 @@ void initSnake() {
 	// todo end delete
 }
 
-void initFruits() {
-	t_listPos *fruit;
-
-	for (int i = 0; i < 10; ++i) { // todo config initial fruit count
-		fruit = malloc(sizeof *fruit);
-		fruit->next = NULL;
-		fruit->pos = randVec3fRange(-40.f, 40.f); // todo config fruits depends on game field
-		if (g_fruits) {
-			fruit->next = g_fruits;
-			g_fruits = fruit;
-		} else {
-			g_fruits = fruit;
-		}
-	}
-}
-
 int main(int argc, char ** argv) {
 	initGlut(&argc, argv);
 	initGL();
 	initSnake();
-	initFruits();
+	addFruits(10); // todo config initial fruit count
 
 	glutMainLoop();
 	return 0;

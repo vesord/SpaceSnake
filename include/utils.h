@@ -18,4 +18,6 @@ void transposeMat(mat3f *mat);
 
 vec3f randVec3fRange(GLfloat min, GLfloat max);
 
+GLfloat distance(vec3f v1, vec3f v2);
+
 #endif //SPACESNAKE_UTILS_H

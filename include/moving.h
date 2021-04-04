@@ -6,5 +6,6 @@
 #define SPACESNAKE_MOVING_H
 
 void calculateStep();
+void addFruits(GLint count);
 
 #endif //SPACESNAKE_MOVING_H

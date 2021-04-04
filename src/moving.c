@@ -4,6 +4,7 @@
 extern vec3f g_pos;
 extern dirMat g_cam;
 extern t_listPos *g_snake;
+extern t_listPos *g_fruits;
 
 static void calcCamStep(GLfloat step) {
 	g_pos.x += g_cam.f.x * step;
@@ -35,8 +36,71 @@ static void calcSnakeStep(GLfloat step) {
 	}
 }
 
+static void snakeGrow() {	// todo add saving last snake part
+	t_listPos *body = g_snake;
+
+	for (; body->next; body = body->next);
+
+	body->next = malloc(sizeof *body);
+	body->next->next = NULL;
+	body->next->pos.x = body->pos.x;
+	body->next->pos.y = body->pos.y;
+	body->next->pos.z = body->pos.z + 1.5; // todo config snake size
+}
+
+void fruitDelete(t_listPos *toDelete) { // todo optimize somehow
+	t_listPos *fruit = g_fruits;
+
+	if (!toDelete)
+		return;
+
+	if (toDelete == g_fruits) {
+		g_fruits = toDelete->next;
+		free(toDelete);
+		return;
+	}
+
+	for (; fruit; fruit = fruit->next) {
+		if (fruit->next == toDelete) {
+			fruit->next = toDelete->next;
+			free(toDelete);
+			return;
+		}
+	}
+}
+
+void addFruits(GLint count) {
+	t_listPos *fruit;
+
+	for (int i = 0; i < count; ++i) {
+		fruit = malloc(sizeof *fruit);
+		fruit->next = NULL;
+		fruit->pos = randVec3fRange(-40.f, 40.f); // todo config fruits depends on game field
+		if (g_fruits) {
+			fruit->next = g_fruits;
+			g_fruits = fruit;
+		} else {
+			g_fruits = fruit;
+		}
+	}
+}
+void checkFruitEating() {
+	t_listPos *fruit = g_fruits;
+	GLfloat tmp; // todo delete this
+
+	for (; fruit; fruit = fruit->next) {
+		if ((tmp = distance(g_snake->pos, fruit->pos)) < 1.5 + 0.6)  { // todo config fruit size and snake size
+			snakeGrow();
+			fruitDelete(fruit);
+			addFruits(1);
+			return;
+		}
+	}
+}
+
 void calculateStep() {
-	GLfloat step = 0.1f; // todo config
+	GLfloat step = 0.1f; // todo config step size
 	calcCamStep(step);
 	calcSnakeStep(step);
+	checkFruitEating();
 }
