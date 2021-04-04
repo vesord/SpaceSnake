@@ -21,14 +21,17 @@ static void calcSnakeStep(GLfloat step) {
 	prev = body;
 	body = body->next;
 
-	for (; body; prev = body, body = body->next) {
-		vec3f dir = {.x = prev->pos.x - body->pos.x,
-					 .y = prev->pos.y - body->pos.y,
-					 .z = prev->pos.z - body->pos.z};
+	vec3f dir;
+
+	for (; body; body = body->next) {
+		dir.x = body->pos.x - prev->pos.x;
+		dir.y = body->pos.y - prev->pos.y;
+		dir.z = body->pos.z - prev->pos.z;
 		normalize(&dir);
-		body->pos.x += dir.x * 1.5; // todo config distance between body parts
-		body->pos.y += dir.y * 1.5;
-		body->pos.z += dir.z * 1.5;
+		body->pos.x = prev->pos.x + dir.x * 1.5; // todo config distance between body parts
+		body->pos.y = prev->pos.y + dir.y * 1.5;
+		body->pos.z = prev->pos.z + dir.z * 1.5;
+		prev = body;
 	}
 }
 

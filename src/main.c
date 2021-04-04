@@ -18,7 +18,7 @@ void display() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
-	gluLookAt(g_pos.x, g_pos.y, g_pos.z, g_cam.f.x * 100, g_cam.f.y * 100, g_cam.f.z * 100, g_cam.u.x, g_cam.u.y, g_cam.u.z);
+	gluLookAt(g_pos.x, g_pos.y, g_pos.z, g_cam.f.x * 1000000, g_cam.f.y * 1000000, g_cam.f.z * 1000000, g_cam.u.x, g_cam.u.y, g_cam.u.z);
 
 	glColor3f(1.f, 0., 0.);
 	glutWireTeapot(1);
@@ -92,20 +92,20 @@ void initSnake() {
 	g_snake->next = tmp;
 	prev = tmp;
 
-	tmp = malloc(sizeof *g_snake);
-	tmp->next = NULL;
-	tmp->pos.x = prev->pos.x;
-	tmp->pos.y = prev->pos.y;
-	tmp->pos.z = prev->pos.z + 1.5;
-	g_snake->next->next = tmp;
-	prev = tmp;
-
-	tmp = malloc(sizeof *g_snake);
-	tmp->next = NULL;
-	tmp->pos.x = prev->pos.x;
-	tmp->pos.y = prev->pos.y;
-	tmp->pos.z = prev->pos.z + 1.5;
-	g_snake->next->next->next = tmp;
+//	tmp = malloc(sizeof *g_snake);
+//	tmp->next = NULL;
+//	tmp->pos.x = prev->pos.x;
+//	tmp->pos.y = prev->pos.y;
+//	tmp->pos.z = prev->pos.z + 1.5;
+//	g_snake->next->next = tmp;
+//	prev = tmp;
+//
+//	tmp = malloc(sizeof *g_snake);
+//	tmp->next = NULL;
+//	tmp->pos.x = prev->pos.x;
+//	tmp->pos.y = prev->pos.y;
+//	tmp->pos.z = prev->pos.z + 1.5;
+//	g_snake->next->next->next = tmp;
 
 	// todo end delete
 }
