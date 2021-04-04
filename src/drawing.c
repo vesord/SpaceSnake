@@ -75,9 +75,9 @@ void drawSnake() {
 	glPushMatrix();
 	glColor3f(0.f, 0.f, 0.f);
 
-	glTranslatef(g_pos.x, g_pos.y, g_pos.z); // go to camera
-	magicallyRotateCam();
-	glTranslatef(-g_pos.x, -g_pos.y, -g_pos.z);
+//	glTranslatef(g_pos.x, g_pos.y, g_pos.z); // go to camera
+//	magicallyRotateCam();
+//	glTranslatef(-g_pos.x, -g_pos.y, -g_pos.z);
 //	glTranslatef(0.f, -3.f, -10.f); // point from camera where start drawing snake
 
 	t_listSnake *body = g_snake;
@@ -85,6 +85,7 @@ void drawSnake() {
 	for (; body; body = body->next) {
 		glPushMatrix();
 		glTranslatef(body->pos.x, body->pos.y, body->pos.z);
+//		glTranslatef(0.f, -3.f, -10.f); // point from camera where start drawing snake
 		glutWireSphere(1, 10, 10);
 		glPopMatrix();
 	}
