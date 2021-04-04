@@ -1,13 +1,10 @@
 #include "spaceSnake.h"
-#include "utils.h"
 #include "materials.h"
 
-extern vec3f g_pos;
 extern dirMat g_cam;
-extern t_listPos *g_snake;
-extern t_listPos *g_fruits;
 extern GLuint g_texSun;
 extern GLuint g_texSpace;
+extern t_globalConfiguration cnf;
 
 void drawScene() {
 	applyMaterial(GL_BACK, MATERIAL_EMPTY_END);
@@ -23,7 +20,7 @@ void drawSnake() {
 	glPushMatrix();
 	applyMaterial(GL_FRONT, MATERIAL_EMERALD);
 
-	t_listPos *body = g_snake;
+	t_listPos *body = cnf.snake;
 	for (; body; body = body->next) {
 		glPushMatrix();
 		glTranslatef(body->pos.x, body->pos.y, body->pos.z);
@@ -34,7 +31,7 @@ void drawSnake() {
 }
 
 void drawFruits() {
-	t_listPos *fruit = g_fruits;
+	t_listPos *fruit = cnf.fruits;
 
 	applyMaterial(GL_FRONT, MATERIAL_GOLD);
 	for (; fruit; fruit = fruit->next) {

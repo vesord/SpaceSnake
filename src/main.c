@@ -1,7 +1,6 @@
 #include "spaceSnake.h"
 #include "display.h"
 #include "keys.h"
-#include "utils.h"
 #include "moving.h"
 #include "bmp.h"
 
@@ -14,8 +13,7 @@ dirMat g_cam = {
 GLuint g_texSun;
 GLuint g_texSpace;
 
-t_listPos* g_snake = NULL;	// todo change pos list to (void* data) list
-t_listPos* g_fruits = NULL;
+t_globalConfiguration cnf = {.snake = NULL, .fruits = NULL};
 
 void initGlut(int *argc, char ** argv) {
 	glutInit(argc, argv);
@@ -47,39 +45,39 @@ void initGL() {
 }
 
 void initSnake() {
-	g_snake = malloc(sizeof *g_snake);
-	g_snake->pos.x = 0.f;
-	g_snake->pos.y = 0.f;
-	g_snake->pos.z = 20.f;
-	g_snake->next = NULL;
+	cnf.snake = malloc(sizeof *cnf.snake);
+	cnf.snake->pos.x = 0.f;
+	cnf.snake->pos.y = 0.f;
+	cnf.snake->pos.z = 20.f;
+	cnf.snake->next = NULL;
 
 	// todo: delete
 	t_listPos *tmp;
 	t_listPos *prev;
-	prev = g_snake;
+	prev = cnf.snake;
 
-	tmp = malloc(sizeof *g_snake);
+	tmp = malloc(sizeof *cnf.snake);
 	tmp->next = NULL;
 	tmp->pos.x = prev->pos.x;
 	tmp->pos.y = prev->pos.y;
 	tmp->pos.z = prev->pos.z + 1.5;
-	g_snake->next = tmp;
+	cnf.snake->next = tmp;
 	prev = tmp;
 
-	tmp = malloc(sizeof *g_snake);
+	tmp = malloc(sizeof *cnf.snake);
 	tmp->next = NULL;
 	tmp->pos.x = prev->pos.x;
 	tmp->pos.y = prev->pos.y;
 	tmp->pos.z = prev->pos.z + 1.5;
-	g_snake->next->next = tmp;
+	cnf.snake->next->next = tmp;
 	prev = tmp;
 
-	tmp = malloc(sizeof *g_snake);
+	tmp = malloc(sizeof *cnf.snake);
 	tmp->next = NULL;
 	tmp->pos.x = prev->pos.x;
 	tmp->pos.y = prev->pos.y;
 	tmp->pos.z = prev->pos.z + 1.5;
-	g_snake->next->next->next = tmp;
+	cnf.snake->next->next->next = tmp;
 
 	// todo end delete
 }

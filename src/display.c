@@ -1,12 +1,10 @@
 #include "spaceSnake.h"
-#include "utils.h"
 #include "drawing.h"
 #include "moving.h"
 #include "keys.h"
 
 extern dirMat g_cam;
-extern t_listPos* g_snake;
-extern t_listPos* g_fruits;
+extern t_globalConfiguration cnf;
 
 void locateLight() {
 	glPushMatrix();
@@ -20,8 +18,8 @@ void display() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
-	gluLookAt(g_snake->pos.x - g_cam.f.x * 10 + g_cam.u.x * 4, g_snake->pos.y - g_cam.f.y * 10 + g_cam.u.y * 4, g_snake->pos.z - g_cam.f.z * 10 + g_cam.u.z * 4,
-			  g_snake->pos.x, g_snake->pos.y, g_snake->pos.z,
+	gluLookAt(cnf.snake->pos.x - g_cam.f.x * 10 + g_cam.u.x * 4, cnf.snake->pos.y - g_cam.f.y * 10 + g_cam.u.y * 4, cnf.snake->pos.z - g_cam.f.z * 10 + g_cam.u.z * 4,
+			  cnf.snake->pos.x, cnf.snake->pos.y, cnf.snake->pos.z,
 			  g_cam.u.x, g_cam.u.y, g_cam.u.z);
 
 	drawSkyBox();

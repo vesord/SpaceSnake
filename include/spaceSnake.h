@@ -6,6 +6,7 @@
 #define SPACESNAKE_SPACESNAKE_H
 
 #include <GL/glut.h>
+#include "materials.h"
 
 typedef struct	s_vec3f {
 	GLfloat x;
@@ -25,8 +26,15 @@ typedef struct	s_directionMat {
 	vec3f l;	// left
 }				dirMat;
 
-typedef struct	s_globalConfiguration {
+typedef struct	s_listPos {
+	struct s_listPos*	next;
+	vec3f				pos;
+	t_material_type		material;
+}				t_listPos;
 
+typedef struct	s_globalConfiguration {
+	t_listPos *snake;			// todo change pos list to (void* data) list
+	t_listPos *fruits;
 }				t_globalConfiguration;
 
 #endif //SPACESNAKE_SPACESNAKE_H
