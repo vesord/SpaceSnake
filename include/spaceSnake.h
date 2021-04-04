@@ -7,6 +7,7 @@
 
 #include <GL/glut.h>
 #include "materials.h"
+#include "gameConfiguration.h"
 
 typedef struct	s_vec3f {
 	GLfloat x;
@@ -27,9 +28,10 @@ typedef struct	s_listPos {
 }				t_listPos;
 
 typedef struct	s_globalConfiguration {
-	t_listPos *snake;			// todo change pos list to (void* data) list
-	t_listPos *fruits;
-	mat3f cam;
+	t_listPos	*snake;			// todo change pos list to (void* data) list
+	t_listPos	*fruits;
+	mat3f 		cam;
+	gameParams	game;
 }				t_globalConfiguration;
 
 #endif //SPACESNAKE_SPACESNAKE_H

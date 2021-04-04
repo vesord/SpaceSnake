@@ -26,9 +26,9 @@ static void calcSnakeStep(GLfloat step) {
 		dir.y = body->pos.y - prev->pos.y;
 		dir.z = body->pos.z - prev->pos.z;
 		normalize(&dir);
-		body->pos.x = prev->pos.x + dir.x * 1.5; // todo config distance between body parts
-		body->pos.y = prev->pos.y + dir.y * 1.5;
-		body->pos.z = prev->pos.z + dir.z * 1.5;
+		body->pos.x = prev->pos.x + dir.x * cnf.game.snakeDefault.bodyDistance;
+		body->pos.y = prev->pos.y + dir.y * cnf.game.snakeDefault.bodyDistance;
+		body->pos.z = prev->pos.z + dir.z * cnf.game.snakeDefault.bodyDistance;
 		prev = body;
 	}
 }
@@ -42,7 +42,7 @@ static void snakeGrow() {	// todo add saving last snake part
 	body->next->next = NULL;
 	body->next->pos.x = body->pos.x;
 	body->next->pos.y = body->pos.y;
-	body->next->pos.z = body->pos.z + 1.5; // todo config snake size
+	body->next->pos.z = body->pos.z + cnf.game.snakeDefault.bodyDistance;
 }
 
 void fruitDelete(t_listPos *toDelete) { // todo optimize somehow
@@ -72,7 +72,7 @@ void addFruits(GLint count) {
 	for (int i = 0; i < count; ++i) {
 		fruit = malloc(sizeof *fruit);
 		fruit->next = NULL;
-		fruit->pos = randVec3fRange(-40.f, 40.f); // todo config fruits depends on game field
+		fruit->pos = randVec3fRange(-cnf.game.cell.radius / 1.8, cnf.game.cell.radius / 1.8);
 		if (cnf.fruits) {
 			fruit->next = cnf.fruits;
 			cnf.fruits = fruit;
@@ -81,11 +81,12 @@ void addFruits(GLint count) {
 		}
 	}
 }
+
 void checkFruitEating() {
 	t_listPos *fruit = cnf.fruits;
 
 	for (; fruit; fruit = fruit->next) {
-		if (distance(cnf.snake->pos, fruit->pos) < 1.5 + 0.6)  { // todo config fruit size and snake size
+		if (distance(cnf.snake->pos, fruit->pos) < cnf.game.snakeDefault.size + cnf.game.fruitDefault.size)  {
 			snakeGrow();
 			fruitDelete(fruit);
 			addFruits(1);
@@ -95,7 +96,7 @@ void checkFruitEating() {
 }
 
 void calculateStep() {
-	GLfloat step = 0.1f; // todo config step size
+	GLfloat step = cnf.game.snakeDefault.movSpeed;
 	calcCamStep(step);
 	calcSnakeStep(step);
 	checkFruitEating();

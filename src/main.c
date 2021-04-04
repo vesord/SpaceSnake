@@ -12,7 +12,16 @@ t_globalConfiguration cnf = {.snake = NULL, .fruits = NULL,
 								 .r1.x = 0.f, .r1.y = 0.f, .r1.z = -1.f,	// forward
 								 .r2.x = 0.f, .r2.y = 1.f, .r2.z = 0.f,		// up
 								 .r3.x =1.f, .r3.y =0.f, .r3.z = 0.f		// right
-							 }};
+							 },
+							 .game = {
+								 .snakeDefault.size = 1.f,
+								 .snakeDefault.movSpeed = 0.1f,
+								 .snakeDefault.bodyDistance = 1.7f,
+								 .snakeDefault.rotSpeed = 4.5f,
+								 .fruitDefault.size = 0.6f,
+								 .fruitDefault.initCount = 10,
+								 .cell.radius = 50.f}
+							};
 
 void initGlut(int *argc, char ** argv) {
 	glutInit(argc, argv);
@@ -82,7 +91,7 @@ void initSnake() {
 }
 
 void initLight() {
-	GLfloat myAmbient[] = {1, 1, 1, 1.};
+	GLfloat myAmbient[] = {0.2, 0.2, 0.2, 1.};
 	GLfloat myDiffuse[] = {1., 1., 1., 1.};
 	GLfloat mySpecular[] = {1., 1., 1., 1.};
 	glLightfv(GL_LIGHT0, GL_AMBIENT, myAmbient);
@@ -91,44 +100,6 @@ void initLight() {
 
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
-
-/*
-	glEnable(GL_LIGHTING);
-	GLfloat myAmbient[] = {.1, .1, .1, 1.};
-	GLfloat myDiffuse[] = {1., 1., 1., 1.};
-	GLfloat mySpecular[] = {1., 1., 1., 1.};
-
-	glLightfv(GL_LIGHT0, GL_AMBIENT, myAmbient);
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, myDiffuse);
-	glLightfv(GL_LIGHT0, GL_SPECULAR, mySpecular);
-	glEnable(GL_LIGHT0);*/
-
-/*	glLightfv(GL_LIGHT1, GL_AMBIENT, myAmbient);
-	glLightfv(GL_LIGHT1, GL_DIFFUSE, myDiffuse);
-	glLightfv(GL_LIGHT1, GL_SPECULAR, mySpecular);
-	glEnable(GL_LIGHT1);
-
-	glLightfv(GL_LIGHT2, GL_AMBIENT, myAmbient);
-	glLightfv(GL_LIGHT2, GL_DIFFUSE, myDiffuse);
-	glLightfv(GL_LIGHT2, GL_SPECULAR, mySpecular);
-	glEnable(GL_LIGHT2);
-
-	glLightfv(GL_LIGHT3, GL_AMBIENT, myAmbient);
-	glLightfv(GL_LIGHT3, GL_DIFFUSE, myDiffuse);
-	glLightfv(GL_LIGHT3, GL_SPECULAR, mySpecular);
-	glEnable(GL_LIGHT3);
-
-	glLightfv(GL_LIGHT4, GL_AMBIENT, myAmbient);
-	glLightfv(GL_LIGHT4, GL_DIFFUSE, myDiffuse);
-	glLightfv(GL_LIGHT4, GL_SPECULAR, mySpecular);
-	glEnable(GL_LIGHT4);
-
-	glLightfv(GL_LIGHT5, GL_AMBIENT, myAmbient);
-	glLightfv(GL_LIGHT5, GL_DIFFUSE, myDiffuse);
-	glLightfv(GL_LIGHT5, GL_SPECULAR, mySpecular);
-	glEnable(GL_LIGHT5);*/
-
-
 }
 
 void initTexture(const char *filename, GLuint *texture) {
@@ -167,7 +138,7 @@ int main(int argc, char ** argv) {
 	initTextures();
 	initLight();
 	initSnake();
-	addFruits(10); // todo config initial fruit count
+	addFruits(cnf.game.fruitDefault.initCount);
 
 	glutMainLoop();
 	return 0;
