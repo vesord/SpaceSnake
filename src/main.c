@@ -1,9 +1,9 @@
 #include "spaceSnake.h"
-#include "drawing.h"
-#include "moving.h"
+#include "display.h"
 #include "keys.h"
 #include "utils.h"
-#include "materials.h"
+#include "moving.h"
+#include "bmp.h"
 
 vec3f g_pos = {.x = 0.f, .y = 0.f, .z = 20.f};
 
@@ -13,49 +13,11 @@ dirMat g_cam = {
 	.l.x =1.f, .l.y =0.f, .l.z = 0.f
 };
 
+GLuint g_texSun;
+GLuint g_texSpace;
+
 t_listPos* g_snake = NULL;	// todo change pos list to (void* data) list
 t_listPos* g_fruits = NULL;
-
-void locateLight() {
-	glPushMatrix();
-	GLfloat lightPos[] = {0.0, 0.0, 0.0, 1.0};
-
-	glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
-	glPopMatrix();
-}
-
-void display() {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glLoadIdentity();
-
-	locateLight();
-
-	gluLookAt(g_pos.x - g_cam.f.x * 10 + g_cam.u.x * 4, g_pos.y - g_cam.f.y * 10 + g_cam.u.y * 4, g_pos.z - g_cam.f.z * 10 + g_cam.u.z * 4,
-		   g_pos.x, g_pos.y, g_pos.z,
-		   g_cam.u.x, g_cam.u.y, g_cam.u.z);
-
-	glColor3f(1.f, 0., 0.);
-	glutWireTeapot(1);
-
-	drawScene();
-	drawSnake();
-	drawFruits();
-
-	calculateStep();
-	doKeysActions();
-
-	glFlush();
-	glutSwapBuffers();
-}
-
-void idle() {
-	display();
-}
-
-void reshape(GLsizei w, GLsizei h) {
-	glViewport(0, 0, w, h);
-	// todo probably set gluPerspective
-}
 
 void initGlut(int *argc, char ** argv) {
 	glutInit(argc, argv);
@@ -125,10 +87,8 @@ void initSnake() {
 }
 
 void initLight() {
-//	glDisable(GL_TEXTURE_3D);
-
 	glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
-	GLfloat myAmbient[] = {1., 1., 1., 1.};
+	GLfloat myAmbient[] = {.01, .01, .01, 1.};
 	GLfloat myDiffuse[] = {1., 1., 1., 1.};
 	GLfloat mySpecular[] = {1., 1., 1., 1.};
 
@@ -165,15 +125,40 @@ void initLight() {
 	glEnable(GL_LIGHTING);
 }
 
+void initTexture(const char *filename, GLuint *texture) {
+	glGenTextures(1, texture);
+	glBindTexture (GL_TEXTURE_2D, *texture);
+
+	int width, height;
+	unsigned char* image = myBMPLoader(filename, &width, &height);
+	if (!image)
+		exit(1);
+
+	fixImage(image, width, height, 4);
+	gluBuild2DMipmaps(GL_TEXTURE_2D, 4, width, height, GL_RGBA, GL_UNSIGNED_BYTE, image);
+	free(image);
+
+	glBindTexture (GL_TEXTURE_2D, 0);
+}
+
+void initTextures() {
+	glEnable(GL_TEXTURE_2D);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+	initTexture("Star.bmp", &g_texSpace);
+	initTexture("Moon.bmp", &g_texSun);
+}
+
 int main(int argc, char ** argv) {
 	initGlut(&argc, argv);
 	initGL();
+	initTextures();
 	initLight();
 	initSnake();
 	addFruits(10); // todo config initial fruit count
-
-	applyMaterial(GL_BACK, MATERIAL_PERL);
-	applyMaterial(GL_FRONT, MATERIAL_CHROME);
 
 	glutMainLoop();
 	return 0;
