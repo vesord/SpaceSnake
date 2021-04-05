@@ -42,40 +42,18 @@ static void deleteSnake() {
 
 static void initSnake() {
 	cnf.snake = malloc(sizeof *cnf.snake);
+	cnf.snake->next = NULL;
 	cnf.snake->pos.x = 0.f;
 	cnf.snake->pos.y = 0.f;
 	cnf.snake->pos.z = 20.f;
-	cnf.snake->next = NULL;
+	cnf.snake->material = cnf.game.snakeDefault.material;
 
-	// todo: delete
-	t_listPos *tmp;
-	t_listPos *prev;
-	prev = cnf.snake;
-
-	tmp = malloc(sizeof *cnf.snake);
-	tmp->next = NULL;
-	tmp->pos.x = prev->pos.x;
-	tmp->pos.y = prev->pos.y;
-	tmp->pos.z = prev->pos.z + 1.5;
-	cnf.snake->next = tmp;
-	prev = tmp;
-
-	tmp = malloc(sizeof *cnf.snake);
-	tmp->next = NULL;
-	tmp->pos.x = prev->pos.x;
-	tmp->pos.y = prev->pos.y;
-	tmp->pos.z = prev->pos.z + 1.5;
-	cnf.snake->next->next = tmp;
-	prev = tmp;
-
-	tmp = malloc(sizeof *cnf.snake);
-	tmp->next = NULL;
-	tmp->pos.x = prev->pos.x;
-	tmp->pos.y = prev->pos.y;
-	tmp->pos.z = prev->pos.z + 1.5;
-	cnf.snake->next->next->next = tmp;
-
-	// todo end delete
+	cnf.snake->next = malloc(sizeof *cnf.snake);
+	cnf.snake->next->next = NULL;
+	cnf.snake->next->pos.x = cnf.snake->pos.x;
+	cnf.snake->next->pos.y = cnf.snake->pos.y;
+	cnf.snake->next->pos.z = cnf.snake->pos.z + 1.5;
+	cnf.snake->next->material = cnf.game.snakeDefault.material;
 }
 
 static void setDefaultConfiguration() {

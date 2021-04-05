@@ -33,16 +33,20 @@ static void calcSnakeStep(GLfloat step) {
 	}
 }
 
-static void snakeGrow() {	// todo add saving last snake part
+static void snakeGrow(GLuint count, t_material_type material) {	// todo add saving last snake part
 	t_listPos *body = cnf.snake;
 
 	for (; body->next; body = body->next);
 
-	body->next = malloc(sizeof *body);
-	body->next->next = NULL;
-	body->next->pos.x = body->pos.x;
-	body->next->pos.y = body->pos.y;
-	body->next->pos.z = body->pos.z + cnf.game.snakeDefault.bodyDistance;
+	for (int i = 0; i < count; ++i) {
+		body->next = malloc(sizeof *body);
+		body->next->next = NULL;
+		body->next->material = material;
+		body->next->pos.x = body->pos.x;
+		body->next->pos.y = body->pos.y;
+		body->next->pos.z = body->pos.z + cnf.game.snakeDefault.bodyDistance;
+		body = body->next;
+	}
 }
 
 static void fruitDelete(t_listPos *toDelete) { // todo optimize somehow
@@ -73,6 +77,7 @@ void addFruits(GLint count) {
 		fruit = malloc(sizeof *fruit);
 		fruit->next = NULL;
 		fruit->pos = randVec3fRange(-cnf.game.cell.radius / 1.8, cnf.game.cell.radius / 1.8);
+		fruit->material = randMaterial();
 		if (cnf.fruits) {
 			fruit->next = cnf.fruits;
 			cnf.fruits = fruit;
@@ -84,9 +89,9 @@ void addFruits(GLint count) {
 
 static void fruitEatenAction(t_listPos *fruit) {
 	addFruits(1);
-	snakeGrow();
-	cnf.game.snakeDefault.movSpeed += cnf.game.snakeDefault.movSpeed / 10;
-	cnf.game.snakeDefault.rotSpeed += cnf.game.snakeDefault.rotSpeed / 100;
+	snakeGrow(2, fruit->material);
+	cnf.game.snakeDefault.movSpeed += cnf.game.snakeDefault.movSpeedIncrease;
+	cnf.game.snakeDefault.rotSpeed += cnf.game.snakeDefault.rotSpeedIncrease;
 }
 
 static void checkFruitEating() {

@@ -205,3 +205,8 @@ void applyMaterial(GLenum cullMode, t_material_type materialType) {
 	glMaterialfv(cullMode, GL_DIFFUSE, materials[materialType].diffuse);
 	glMaterialfv(cullMode, GL_SPECULAR, materials[materialType].specular);
 }
+
+t_material_type randMaterial() {
+	int range = MATERIAL_EMPTY_END - MATERIAL_NONE_BEGIN - 1;
+	return rand() % range + 1;
+}

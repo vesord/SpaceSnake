@@ -44,9 +44,12 @@ static t_globalConfiguration configDefault = {.snake = NULL, .fruits = NULL,
 	},
 	.game = {
 		.snakeDefault.size = 1.f,
-		.snakeDefault.movSpeed = 0.01f,
 		.snakeDefault.bodyDistance = 1.7f,
+		.snakeDefault.material = MATERIAL_CHROME,
+		.snakeDefault.movSpeed = 0.1f,
+		.snakeDefault.movSpeedIncrease = 0.002,
 		.snakeDefault.rotSpeed = 4.5f,
+		.snakeDefault.rotSpeedIncrease = 0.045f,
 		.fruitDefault.size = 0.9f,
 		.fruitDefault.initCount = 10,
 		.cell.radius = 50.f}

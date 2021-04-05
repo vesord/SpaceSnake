@@ -8,6 +8,7 @@ void drawScene() {
 	applyMaterial(GL_FRONT, MATERIAL_EMPTY_END);
 
 	GLdouble ofs = cnf.game.cell.radius;
+
 	glPushMatrix();
 	glutWireSphere(ofs, 20, 20);
 	glPopMatrix();
@@ -15,12 +16,12 @@ void drawScene() {
 
 void drawSnake() {
 	glPushMatrix();
-	applyMaterial(GL_FRONT, MATERIAL_EMERALD);
 
 	t_listPos *body = cnf.snake;
 	for (; body; body = body->next) {
 		glPushMatrix();
 		glTranslatef(body->pos.x, body->pos.y, body->pos.z);
+		applyMaterial(GL_FRONT, body->material);
 		glutSolidSphere(cnf.game.snakeDefault.size, 50, 50);
 		glPopMatrix();
 	}
@@ -30,9 +31,9 @@ void drawSnake() {
 void drawFruits() {
 	t_listPos *fruit = cnf.fruits;
 
-	applyMaterial(GL_FRONT, MATERIAL_GOLD);
 	for (; fruit; fruit = fruit->next) {
 		glPushMatrix();
+		applyMaterial(GL_FRONT, fruit->material);
 		glTranslatef(fruit->pos.x, fruit->pos.y, fruit->pos.z);
 		glutSolidTorus(cnf.game.fruitDefault.size / 2, cnf.game.fruitDefault.size, 25, 25);
 		glPopMatrix();

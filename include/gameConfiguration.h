@@ -10,6 +10,8 @@ typedef struct	s_snakeParams {
 	GLfloat	bodyDistance;
 	GLfloat movSpeed;
 	GLfloat rotSpeed;
+	GLfloat movSpeedIncrease;
+	GLfloat rotSpeedIncrease;
 	t_material_type material;
 }				t_snakeParams;
 

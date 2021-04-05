@@ -36,6 +36,7 @@ typedef enum e_material_type {
 }			 t_material_type;
 
 void applyMaterial(GLenum cullMode, t_material_type materialType);
+t_material_type randMaterial();
 
 
 #endif //SPACESNAKE_MATERIALS_H
