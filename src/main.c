@@ -19,6 +19,7 @@ void initGlut(int *argc, char ** argv) {
 	glutIgnoreKeyRepeat(GL_TRUE);
 	glutKeyboardFunc(keyPressed);
 	glutKeyboardUpFunc(keyReleased);
+	glutMouseFunc(mouse);
 }
 
 void initGL() {

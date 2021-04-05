@@ -48,3 +48,19 @@ void keyReleased(unsigned char key, int x, int y) {
 		default: break;
 	}
 }
+
+static void wheelUpAction() {
+	cnf.cam.zoom = cnf.cam.zoom == cnf.cam.zoomMax ? cnf.cam.zoom : cnf.cam.zoom + 1.f;
+}
+
+static void wheelDownAction() {
+	cnf.cam.zoom = cnf.cam.zoom == cnf.cam.zoomMin ? cnf.cam.zoom : cnf.cam.zoom - 1.f;
+}
+
+void mouse(int button, int state, int x, int y) {
+	switch (button) {
+		case 3: if (state == GLUT_UP) wheelUpAction(); break;
+		case 4: if (state == GLUT_UP) wheelDownAction(); break;
+		default: break;
+	}
+}

@@ -64,7 +64,7 @@ static t_globalConfiguration configDefault = {.snake = NULL, .fruits = NULL,
 		.cell.radius = 50.f},
 	.cam = {
 		.camDir = {.x = -0.92847669088f, .y = 0.3713906763f, .z = 0.f},
-		.zoom = 11,
+		.zoom = 25,
 		.zoomMax = 50,
 		.zoomMin = 5
 		}
