@@ -59,9 +59,9 @@ static void initSnake() {
 }
 
 static void setDefaultConfiguration() {
-	cnf.game = configDefault.game;
-	cnf.head = configDefault.head;
-	cnf.cam = configDefault.cam;
+	cnf.game = g_configDefault.game;
+	cnf.head = g_configDefault.head;
+	cnf.cam = g_configDefault.cam;
 }
 
 void restart() {
@@ -119,7 +119,7 @@ void initTextures() {
 }
 
 int main(int argc, char ** argv) {
-	cnf = configDefault;
+	cnf = g_configDefault;
 	initGlut(&argc, argv);
 	initGL();
 	initTextures();

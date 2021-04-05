@@ -15,6 +15,10 @@ typedef struct	s_pressedKeys {
 }				t_pressedKeys;
 
 typedef struct	s_pressedMouse {
+	int pushedlx;
+	int pushedly;
+	int pushedrx;
+	int pushedry;
 	char left;
 	char right;
 }				t_pressedMouse;

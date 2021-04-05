@@ -19,7 +19,7 @@ typedef struct	s_globalConfiguration {
 	gameWindow		window;
 }				t_globalConfiguration;
 
-static t_globalConfiguration configDefault = {.snake = NULL, .fruits = NULL,
+static const t_globalConfiguration g_configDefault = {.snake = NULL, .fruits = NULL,
 	.head = {
 		.r1.x = 0.f, .r1.y = 0.f, .r1.z = -1.f,		// forward
 		.r2.x = 0.f, .r2.y = 1.f, .r2.z = 0.f,		// up
