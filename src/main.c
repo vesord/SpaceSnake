@@ -82,7 +82,8 @@ static void initSnake() {
 }
 
 static void setDefaultConfiguration() {
-	cnf = configDefault;
+	cnf.game = configDefault.game;
+	cnf.cam = configDefault.cam;
 }
 
 void restart() {
@@ -92,52 +93,58 @@ void restart() {
 }
 
 void initLight() {
-	GLfloat myAmbient[] = {0.2, 0.2, 0.2, 1.};
+	glEnable(GL_LIGHTING);
+	GLfloat myAmbient[] = {0.3, 0.3, 0.3, 1.};
 	GLfloat myDiffuse[] = {1., 1., 1., 1.};
 	GLfloat mySpecular[] = {1., 1., 1., 1.};
 	glLightfv(GL_LIGHT0, GL_AMBIENT, myAmbient);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, myDiffuse);
 	glLightfv(GL_LIGHT0, GL_SPECULAR, mySpecular);
 
-	glEnable(GL_LIGHTING);
+	myDiffuse[0] = 0.3; myDiffuse[1] = 0.3; myDiffuse[2] = 0.3;
+	mySpecular[0] = 0.3; mySpecular[1] = 0.3; mySpecular[2] = 0.3;
+	glLightfv(GL_LIGHT1, GL_AMBIENT, myAmbient);
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, myDiffuse);
+	glLightfv(GL_LIGHT1, GL_SPECULAR, mySpecular);
+
 	glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHT1);
 }
 
 void initTexture(const char *filename, GLuint *texture) {
 	glGenTextures(1, texture);
 	glBindTexture(GL_TEXTURE_2D, *texture);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D,GL_GENERATE_MIPMAP_SGIS,GL_TRUE);
 
 	int width, height, channels;
 	unsigned char* image = myBMPLoader(filename, &width, &height, &channels);
 	if (!image)
 		exit(1);
 
+	GLenum colorStore = channels == 4 ? GL_RGBA : GL_RGB;
+
 	fixImage(image, width, height, channels);
-	gluBuild2DMipmaps(GL_TEXTURE_2D, channels, width, height, channels == 4 ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, image);
+	glTexImage2D(GL_TEXTURE_2D, 0, colorStore, width, height, 0, colorStore, GL_UNSIGNED_BYTE, image);
+	gluBuild2DMipmaps(GL_TEXTURE_2D, channels, width, height, colorStore, GL_UNSIGNED_BYTE, image);
 	free(image);
 
-	glBindTexture (GL_TEXTURE_2D, 0);
+	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 void initTextures() {
 	glEnable(GL_TEXTURE_2D);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
 
-//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
-//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_NEAREST);
-
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-
-	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-
-	initTexture("./textures/skybox3.bmp", &g_texSpace);
-//	initTexture("./textures/Star.bmp", &g_texSpace);
-//	initTexture("./textures/Moon.bmp", &g_texSun);
+	initTexture("./textures/skyboxSpace/left.bmp", &cnf.tex.skybox.left);
+	initTexture("./textures/skyboxSpace/right.bmp", &cnf.tex.skybox.right);
+	initTexture("./textures/skyboxSpace/front.bmp", &cnf.tex.skybox.front);
+	initTexture("./textures/skyboxSpace/back.bmp", &cnf.tex.skybox.back);
+	initTexture("./textures/skyboxSpace/down.bmp", &cnf.tex.skybox.down);
+	initTexture("./textures/skyboxSpace/up.bmp", &cnf.tex.skybox.up);
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 

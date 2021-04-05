@@ -7,9 +7,10 @@ extern t_globalConfiguration cnf;
 
 void locateLight() {
 	glPushMatrix();
-	GLfloat lightPos[] = {0.0, 0.0, 100.0, 1.0};
-
+	GLfloat lightPos[] = {0.0f, 0.0f, 100.0f, 1.0f};
 	glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+	lightPos[3] = -100.f;
+	glLightfv(GL_LIGHT1, GL_POSITION, lightPos);
 	glPopMatrix();
 }
 

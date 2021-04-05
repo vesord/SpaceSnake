@@ -42,50 +42,62 @@ void drawFruits() {
 }
 
 void drawSkyBox() {
-	GLfloat ofs = 100.f;
+	GLfloat ofs = 300.f;
 
-	glBindTexture(GL_TEXTURE_2D, g_texSpace);
 	applyMaterial(GL_FRONT, MATERIAL_EMPTY_END);
+
+	glBindTexture(GL_TEXTURE_2D, cnf.tex.skybox.right);
 	glBegin(GL_QUADS);
 	glColor3f(.9f, 0.2f, 2.f); // +x plane
-	glTexCoord2f(1.0f, 2.f / 3.f); glVertex3f( ofs,  ofs,  ofs);
-	glTexCoord2f(.75f, 2.f / 3.f); glVertex3f( ofs,  ofs, -ofs);
-	glTexCoord2f(.75f, 1.f / 3.f); glVertex3f( ofs, -ofs, -ofs);
-	glTexCoord2f(1.0f, 1.f / 3.f); glVertex3f( ofs, -ofs,  ofs);
+	glTexCoord2f(1, 1); glVertex3f( ofs,  ofs,  ofs);
+	glTexCoord2f(0, 1); glVertex3f( ofs,  ofs, -ofs);
+	glTexCoord2f(0, 0); glVertex3f( ofs, -ofs, -ofs);
+	glTexCoord2f(1, 0); glVertex3f( ofs, -ofs,  ofs);
+	glEnd();
 
+	glBindTexture(GL_TEXTURE_2D, cnf.tex.skybox.left);
+	glBegin(GL_QUADS);
 	glColor3f(.4f, 0.f, 0.7f); // -x plane
-	glTexCoord2f(0.5f, 2.f / 3.f); glVertex3f(-ofs,  ofs, -ofs);
-	glTexCoord2f(.25f, 2.f / 3.f); glVertex3f(-ofs,  ofs,  ofs);
-	glTexCoord2f(.25f, 1.f / 3.f); glVertex3f(-ofs, -ofs,  ofs);
-	glTexCoord2f(0.5f, 1.f / 3.f); glVertex3f(-ofs, -ofs, -ofs);
+	glTexCoord2f(1, 1); glVertex3f(-ofs,  ofs, -ofs);
+	glTexCoord2f(0, 1); glVertex3f(-ofs,  ofs,  ofs);
+	glTexCoord2f(0, 0); glVertex3f(-ofs, -ofs,  ofs);
+	glTexCoord2f(1, 0); glVertex3f(-ofs, -ofs, -ofs);
+	glEnd();
 
+	glBindTexture(GL_TEXTURE_2D, cnf.tex.skybox.front);
+	glBegin(GL_QUADS);
 	glColor3f(0.1f, 0.5f, 0.8f); // -z plane
-	glTexCoord2f(.75f, 2.f / 3.f); glVertex3f( ofs,  ofs, -ofs);
-	glTexCoord2f(0.5f, 2.f / 3.f); glVertex3f(-ofs,  ofs, -ofs);
-	glTexCoord2f(0.5f, 1.f / 3.f); glVertex3f(-ofs, -ofs, -ofs);
-	glTexCoord2f(.75f, 1.f / 3.f); glVertex3f( ofs, -ofs, -ofs);
+	glTexCoord2f(1, 1); glVertex3f( ofs,  ofs, -ofs);
+	glTexCoord2f(0, 1); glVertex3f(-ofs,  ofs, -ofs);
+	glTexCoord2f(0, 0); glVertex3f(-ofs, -ofs, -ofs);
+	glTexCoord2f(1, 0); glVertex3f( ofs, -ofs, -ofs);
+	glEnd();
 
+	glBindTexture(GL_TEXTURE_2D, cnf.tex.skybox.back);
+	glBegin(GL_QUADS);
 	glColor3f(0.7f, 0.1f, 0.3f); // +z plane
-	glTexCoord2f(0.0f, 2.f / 3.f); glVertex3f( ofs,  ofs,  ofs);
-	glTexCoord2f(0.0f, 1.f / 3.f); glVertex3f( ofs, -ofs,  ofs);
-	glTexCoord2f(.25f, 1.f / 3.f); glVertex3f(-ofs, -ofs,  ofs);
-	glTexCoord2f(.25f, 2.f / 3.f); glVertex3f(-ofs,  ofs,  ofs);
+	glTexCoord2f(1, 1); glVertex3f(-ofs,  ofs,  ofs);
+	glTexCoord2f(0, 1); glVertex3f( ofs,  ofs,  ofs);
+	glTexCoord2f(0, 0); glVertex3f( ofs, -ofs,  ofs);
+	glTexCoord2f(1, 0); glVertex3f(-ofs, -ofs,  ofs);
+	glEnd();
 
+	glBindTexture(GL_TEXTURE_2D, cnf.tex.skybox.down);
+	glBegin(GL_QUADS);
 	glColor3f(0.2f, 0.9f, 0.9f); // -y plane
-	glTexCoord2f(.25f/* + 0.0105*/, 0.0f); glVertex3f( ofs, -ofs,  ofs);
-	glTexCoord2f(0.5f/* + 0.0105*/, 0.0f); glVertex3f( ofs, -ofs, -ofs);
-	glTexCoord2f(0.5f/* + 0.0105*/, 1.f / 3.f); glVertex3f(-ofs, -ofs, -ofs);
-	glTexCoord2f(.25f/* + 0.0105*/, 1.f / 3.f); glVertex3f(-ofs, -ofs,  ofs);
-/*	glEnd();
+	glTexCoord2f(1, 1); glVertex3f(-ofs, -ofs, -ofs);
+	glTexCoord2f(0, 1); glVertex3f(-ofs, -ofs,  ofs);
+	glTexCoord2f(0, 0); glVertex3f( ofs, -ofs,  ofs);
+	glTexCoord2f(1, 0); glVertex3f( ofs, -ofs, -ofs);
+	glEnd();
 
-	glBindTexture(GL_TEXTURE_2D, g_texSun);
-	glBegin(GL_QUADS);*/
+	glBindTexture(GL_TEXTURE_2D, cnf.tex.skybox.up);
+	glBegin(GL_QUADS);
 	glColor3f(0.5f, 0.9f, 0.3f); // +y plane
-	glTexCoord2f(.25f, 1.0f);         glVertex3f( ofs,  ofs,  ofs);
-	glTexCoord2f(.25f, 2.f / 3.f);    glVertex3f(-ofs,  ofs,  ofs);
-	glTexCoord2f(0.5f, 2.f / 3.f); 	glVertex3f(-ofs,  ofs, -ofs);
-	glTexCoord2f(0.5f, 1.0f); 		glVertex3f( ofs,  ofs, -ofs);
-
+	glTexCoord2f(1, 1); glVertex3f( ofs,  ofs, -ofs);
+	glTexCoord2f(0, 1); glVertex3f( ofs,  ofs,  ofs);
+	glTexCoord2f(0, 0); glVertex3f(-ofs,  ofs,  ofs);
+	glTexCoord2f(1, 0); glVertex3f(-ofs,  ofs, -ofs);
 	glEnd();
 
 	glBindTexture(GL_TEXTURE_2D, 0);
