@@ -124,11 +124,12 @@ void initTextures() {
 }
 
 void printIntro() {
-	printf("You're abandoned immortal super duper ultra mega dangerous destroyer annihilator SNAKE.\n");
-	printf("You've been jailed forever by your enemies. And you only joy now is infinite donat eating.\n\n");
-	printf("CONTROLS: WASDQE, mouse left, mouse wheel, ESC\n");
-	printf("Checkout spaceSnake.h for configuration (key/mouse inversion included)\n\n");
-	printf("Type something to start.\n");
+	write(1, "\033[2J", 4);
+	printf("You're abandoned immortal super duper\nultra mega dangerous destroyer annihilator SNAKE.\n");
+	printf("You've been jailed forever by your enemies.\nAnd you only joy now is infinite donat eating.\n\n");
+	printf("CONTROLS: WASDQE, mouse left, mouse wheel, ESC.\n");
+	printf("Checkout spaceSnake.h for configuration (key/mouse inversion included).\n\n");
+	printf("Type something to start: ");
 
 	char dummy;
 	read(0, &dummy, 1);

@@ -1,7 +1,12 @@
 #ifndef SPACESNAKE_TYPES_H
 #define SPACESNAKE_TYPES_H
 
-#include "GL/glut.h"
+#ifdef __APPLE__
+# define GL_SILENCE_DEPRECATION
+# include "GLUT/glut.h"
+#else
+# include "GL/glut.h"
+#endif
 #include "materials.h"
 
 typedef struct	s_vec3f {
