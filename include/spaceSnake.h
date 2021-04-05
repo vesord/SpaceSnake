@@ -8,18 +8,22 @@
 #include "gameTextures.h"
 #include "gameCamera.h"
 #include "gameWindow.h"
+#include "gameControls.h"
 
 typedef struct	s_globalConfiguration {
 	t_listPos		*snake;			// todo change pos list to (void* data) list
+	t_listPos		*tail;
 	t_listPos		*fruits;
 	mat3f 			head;
 	gameParams		game;
 	gameTextures	tex;
 	gameCamera		cam;
 	gameWindow		window;
+	gameControls	control;
+	GLuint			score;
 }				t_globalConfiguration;
 
-static const t_globalConfiguration g_configDefault = {.snake = NULL, .fruits = NULL,
+static const t_globalConfiguration g_configDefault = {.snake = NULL, .fruits = NULL, .tail = NULL, .score = 0,
 	.head = {
 		.r1.x = 0.f, .r1.y = 0.f, .r1.z = -1.f,		// forward
 		.r2.x = 0.f, .r2.y = 1.f, .r2.z = 0.f,		// up
@@ -54,7 +58,12 @@ static const t_globalConfiguration g_configDefault = {.snake = NULL, .fruits = N
 		.zFar = 2000.,
 		.zNear = 2,
 		.fullscreen = 0
-	}
+	},
+	.control = {
+		.keyInverse = 1.f,
+		.mouseInverse = -1.f,
+		.mouseSense = 0.1f
+}
 };
 
 void restart();

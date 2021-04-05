@@ -4,6 +4,8 @@
 #include "moving.h"
 #include "bmp.h"
 #include "utils.h"
+#include <stdio.h>
+#include <unistd.h>
 
 t_globalConfiguration cnf;
 
@@ -56,12 +58,15 @@ static void initSnake() {
 	cnf.snake->next->pos.y = cnf.snake->pos.y;
 	cnf.snake->next->pos.z = cnf.snake->pos.z + 1.5;
 	cnf.snake->next->material = cnf.game.snakeDefault.material;
+
+	cnf.tail = cnf.snake->next;
 }
 
 static void setDefaultConfiguration() {
 	cnf.game = g_configDefault.game;
 	cnf.head = g_configDefault.head;
 	cnf.cam = g_configDefault.cam;
+	cnf.score = 0;
 }
 
 void restart() {
@@ -118,7 +123,19 @@ void initTextures() {
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
+void printIntro() {
+	printf("You're abandoned immortal super duper ultra mega dangerous destroyer annihilator SNAKE.\n");
+	printf("You've been jailed forever by your enemies. And you only joy now is infinite donat eating.\n\n");
+	printf("CONTROLS: WASDQE, mouse left, mouse wheel, ESC\n");
+	printf("Checkout spaceSnake.h for configuration (key/mouse inversion included)\n\n");
+	printf("Type something to start.\n");
+
+	char dummy;
+	read(0, &dummy, 1);
+}
+
 int main(int argc, char ** argv) {
+	printIntro();
 	cnf = g_configDefault;
 	initGlut(&argc, argv);
 	initGL();

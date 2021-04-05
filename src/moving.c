@@ -1,5 +1,6 @@
 #include "spaceSnake.h"
 #include "utils.h"
+#include <stdio.h>
 
 extern t_globalConfiguration cnf;
 
@@ -89,6 +90,7 @@ void addFruits(GLint count) {
 
 static void fruitEatenAction(t_listPos *fruit) {
 	addFruits(1);
+	cnf.score += 2;
 	snakeGrow(cnf.game.snakeDefault.growCount, fruit->material);
 	cnf.game.snakeDefault.movSpeed += cnf.game.snakeDefault.movSpeedIncrease;
 	cnf.game.snakeDefault.rotSpeed += cnf.game.snakeDefault.rotSpeedIncrease;
@@ -110,6 +112,7 @@ static void checkDeath() {
 	static const vec3f origin = {.x = 0.f, .y = 0.f, .z = 0.f};
 
 	if (distance(cnf.snake->pos, origin) > cnf.game.cell.radius - cnf.game.snakeDefault.size) {
+		printf("You were smashed against the wall! Your score: %d\n", cnf.score); // todo add print function
 		restart();
 	}
 }
@@ -120,8 +123,13 @@ static void checkEatSelf() {
 	if (!body)
 		return;
 
+	int newScore = 0;
+
 	for (; body->next; body = body->next) {
+		++newScore;
 		if (distance(cnf.snake->pos, body->next->pos) < cnf.game.snakeDefault.bodyDistance) {
+			printf("You ate yourself! Your score: %d\n", cnf.score); // todo add print function
+			cnf.score = newScore;
 			lstFreeSimple(body->next);
 			body->next = NULL;
 			return;

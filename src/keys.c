@@ -8,7 +8,7 @@ t_pressedMouse g_pressedMouse;
 extern t_globalConfiguration cnf;
 
 void doKeysActions() {	// todo optimization multiplication
-	static const GLfloat keyInvert = 1.;	// todo add to config
+	GLfloat keyInvert = cnf.control.keyInverse;
 
 	if (g_pressedKeys.a)
 		rotMatAroundVec((mat3f *) &cnf.head, cnf.head.r2, M_PI / 180. * cnf.game.snakeDefault.rotSpeed * keyInvert);	// r2 - up direction (rot around up)
@@ -91,42 +91,40 @@ void mouseButton(int button, int state, int x, int y) {
 }
 
 static GLfloat getIntense(GLfloat effect) {
-	static const GLfloat sence = 10.f;	// todo add to config
-	GLfloat intense = effect / sence;
+	GLfloat intense = effect * cnf.control.mouseSense;
 	return (intense > 1.) * 1. + (intense <= 1.) * intense;
 }
 
 static void moveSnake(int x, int y, int *prevx, int *prevy) { // todo optimization multiplication
-	static const GLfloat mouseInvert = -1.;	// todo add to config
 	GLfloat intense;
 
 	intense = getIntense(x - *prevx);
 	rotMatAroundVec((mat3f *) &cnf.head, cnf.head.r2,
-					M_PI / 180. * cnf.game.snakeDefault.rotSpeed * intense * mouseInvert);	// r2 - up direction (rot around up)
+					M_PI / 180. * cnf.game.snakeDefault.rotSpeed * intense * cnf.control.mouseInverse);	// r2 - up direction (rot around up)
 	intense = getIntense(y - * prevy);
 	rotMatAroundVec((mat3f *) &cnf.head, cnf.head.r3,
-					M_PI / 180. * cnf.game.snakeDefault.rotSpeed * intense * mouseInvert);	// r3 - left direction (rot around left)
+					M_PI / 180. * cnf.game.snakeDefault.rotSpeed * intense * cnf.control.mouseInverse);	// r3 - left direction (rot around left)
 	*prevx = x;
 	*prevy = y;
 }
 
 static void moveCam(int x, int y, int *prevx, int *prevy) {
-	static const GLfloat mouseInvert = -1.;	// todo add to config
 	GLfloat intense;
 	mat3f rotMat;
 
 	intense = getIntense(x - *prevx);
-	genRotMat(&rotMat, normalVecZ, M_PI / 180. * 5.f * intense * mouseInvert);
+	genRotMat(&rotMat, normalVecZ, M_PI / 180. * 5.f * intense * cnf.control.mouseInverse);
 	rotVec(&cnf.cam.camDir, &rotMat);
 
 	intense = getIntense(y - *prevy);
-	genRotMat(&rotMat, normalVecY, M_PI / 180. * 5.f * intense * mouseInvert);
+	genRotMat(&rotMat, normalVecY, M_PI / 180. * 5.f * intense * cnf.control.mouseInverse);
 	rotVec(&cnf.cam.camDir, &rotMat);
 
 	*prevx = x;
 	*prevy = y;
 }
 
+// cam rotation by mouse is not working properly...
 void mouseMove(int x, int y) {
 	if (cnf.game.pause)
 		return;
