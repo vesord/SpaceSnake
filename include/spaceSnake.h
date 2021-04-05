@@ -34,6 +34,22 @@ typedef struct	s_globalConfiguration {
 	gameParams	game;
 }				t_globalConfiguration;
 
+static t_globalConfiguration configDefault = {.snake = NULL, .fruits = NULL,
+	.cam = {
+		.r1.x = 0.f, .r1.y = 0.f, .r1.z = -1.f,	// forward
+		.r2.x = 0.f, .r2.y = 1.f, .r2.z = 0.f,		// up
+		.r3.x =1.f, .r3.y =0.f, .r3.z = 0.f		// right
+	},
+	.game = {
+		.snakeDefault.size = 1.f,
+		.snakeDefault.movSpeed = 0.1f,
+		.snakeDefault.bodyDistance = 1.7f,
+		.snakeDefault.rotSpeed = 4.5f,
+		.fruitDefault.size = 0.9f,
+		.fruitDefault.initCount = 10,
+		.cell.radius = 50.f}
+};
+
 void restart();
 
 #endif //SPACESNAKE_SPACESNAKE_H

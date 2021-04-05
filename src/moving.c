@@ -82,27 +82,26 @@ void addFruits(GLint count) {
 	}
 }
 
+static void fruitEatenAction(t_listPos *fruit) {
+	addFruits(1);
+	snakeGrow();
+	cnf.game.snakeDefault.movSpeed += cnf.game.snakeDefault.movSpeed / 10;
+	cnf.game.snakeDefault.rotSpeed += cnf.game.snakeDefault.rotSpeed / 100;
+}
+
 static void checkFruitEating() {
 	t_listPos *fruit = cnf.fruits;
 
 	for (; fruit; fruit = fruit->next) {
 		if (distance(cnf.snake->pos, fruit->pos) < cnf.game.snakeDefault.size + cnf.game.fruitDefault.size)  {
-			snakeGrow();
+			fruitEatenAction(fruit);
 			fruitDelete(fruit);
-			addFruits(1);
 			return;
 		}
 	}
 }
 
-void calculateStep() {
-	GLfloat step = cnf.game.snakeDefault.movSpeed;
-	calcCamStep(step);
-	calcSnakeStep(step);
-	checkFruitEating();
-}
-
-void checkDeath() {
+static void checkDeath() {
 	static const vec3f origin = {.x = 0.f, .y = 0.f, .z = 0.f};
 
 	if (distance(cnf.snake->pos, origin) > cnf.game.cell.radius - cnf.game.snakeDefault.size) {
@@ -110,7 +109,7 @@ void checkDeath() {
 	}
 }
 
-void checkEatSelf() {
+static void checkEatSelf() {
 	t_listPos *body = cnf.snake->next;
 
 	if (!body)
@@ -123,4 +122,16 @@ void checkEatSelf() {
 			return;
 		}
 	}
+}
+
+void move() {
+	GLfloat step = cnf.game.snakeDefault.movSpeed;
+	calcCamStep(step);
+	calcSnakeStep(step);
+}
+
+void checkEvents() {
+	checkDeath();
+	checkEatSelf();
+	checkFruitEating();
 }

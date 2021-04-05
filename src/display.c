@@ -27,9 +27,8 @@ void display() {
 	drawFruits();
 	locateLight();
 
-	calculateStep();
-	checkDeath();
-	checkEatSelf();
+	move();
+	checkEvents();
 	doKeysActions();
 
 	glFlush();
