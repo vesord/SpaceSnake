@@ -1,8 +1,6 @@
 #include "spaceSnake.h"
 #include "materials.h"
 
-extern GLuint g_texSun;
-extern GLuint g_texSpace;
 extern t_globalConfiguration cnf;
 
 void drawScene() {

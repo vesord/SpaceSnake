@@ -5,9 +5,6 @@
 #include "bmp.h"
 #include "utils.h"
 
-GLuint g_texSun;
-GLuint g_texSpace;
-
 t_globalConfiguration cnf;
 
 void initGlut(int *argc, char ** argv) {
@@ -100,15 +97,7 @@ void initLight() {
 	glLightfv(GL_LIGHT0, GL_AMBIENT, myAmbient);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, myDiffuse);
 	glLightfv(GL_LIGHT0, GL_SPECULAR, mySpecular);
-
-	myDiffuse[0] = 0.3; myDiffuse[1] = 0.3; myDiffuse[2] = 0.3;
-	mySpecular[0] = 0.3; mySpecular[1] = 0.3; mySpecular[2] = 0.3;
-	glLightfv(GL_LIGHT1, GL_AMBIENT, myAmbient);
-	glLightfv(GL_LIGHT1, GL_DIFFUSE, myDiffuse);
-	glLightfv(GL_LIGHT1, GL_SPECULAR, mySpecular);
-
 	glEnable(GL_LIGHT0);
-	glEnable(GL_LIGHT1);
 }
 
 void initTexture(const char *filename, GLuint *texture) {
