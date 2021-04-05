@@ -36,7 +36,8 @@ static const t_globalConfiguration g_configDefault = {.snake = NULL, .fruits = N
 		.snakeDefault.growCount = 2,
 		.fruitDefault.size = 0.9f,
 		.fruitDefault.initCount = 10,
-		.cell.radius = 50.f},
+		.cell.radius = 50.f,
+		.pause = 0},
 	.cam = {
 		.camDir = {.x = -0.92847669088f, .y = 0.3713906763f, .z = 0.f},
 		.zoom = 25,

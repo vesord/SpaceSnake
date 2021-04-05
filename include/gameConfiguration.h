@@ -35,6 +35,7 @@ typedef struct	s_gameParams {
 	t_snakeParams snakeDefault;
 	t_fruitParams fruitDefault;
 	t_cellParams  cell;
+	int			  pause;
 }				gameParams;
 
 #endif //SPACESNAKE_GAMECONFIGURATION_H

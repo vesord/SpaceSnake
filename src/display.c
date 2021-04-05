@@ -51,7 +51,8 @@ void display() {
 }
 
 void idle() {
-	display();
+	if (!cnf.game.pause)
+		display();
 }
 
 void reshape(GLsizei w, GLsizei h) {

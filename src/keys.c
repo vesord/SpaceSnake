@@ -29,6 +29,9 @@ void doKeysActions() {	// todo optimization multiplication
 }
 
 void keyPressed(unsigned char key, int x, int y) {
+	if (cnf.game.pause && key != 27)
+		return;
+
 	switch (key) {
 		case 'a': g_pressedKeys.a = 1; break;
 		case 'd': g_pressedKeys.d = 1; break;
@@ -36,11 +39,15 @@ void keyPressed(unsigned char key, int x, int y) {
 		case 's': g_pressedKeys.s = 1; break;
 		case 'q': g_pressedKeys.q = 1; break;
 		case 'e': g_pressedKeys.e = 1; break;
+		case 27 : cnf.game.pause = !cnf.game.pause; /* ESC code */
 		default: break;
 	}
 }
 
 void keyReleased(unsigned char key, int x, int y) {
+	if (cnf.game.pause)
+		return;
+
 	switch (key) {
 		case 'a': g_pressedKeys.a = 0; break;
 		case 'd': g_pressedKeys.d = 0; break;
@@ -61,6 +68,9 @@ static void wheelDownAction() {
 }
 
 void mouseButton(int button, int state, int x, int y) {
+	if (cnf.game.pause)
+		return;
+
 	switch (button) {
 		case GLUT_LEFT_BUTTON: {
 			g_pressedMouse.left = state == GLUT_UP ? 0 : 1;
@@ -78,10 +88,6 @@ void mouseButton(int button, int state, int x, int y) {
 		case 4: if (state == GLUT_UP) wheelDownAction(); break;
 		default: break;
 	}
-}
-
-static int sign(int x) {
-	return (x < 0) * -1 + (x >= 0) * 1;
 }
 
 static GLfloat getIntense(GLfloat effect) {
@@ -117,19 +123,16 @@ static void moveCam(int x, int y, int *prevx, int *prevy) {
 	genRotMat(&rotMat, normalVecY, M_PI / 180. * 5.f * intense * mouseInvert);
 	rotVec(&cnf.cam.camDir, &rotMat);
 
-//	rotMatAroundVec((mat3f *) &cnf.head, cnf.head.r2,
-//					M_PI / 180. * cnf.game.snakeDefault.rotSpeed * intense * mouseInvert);	// r2 - up direction (rot around up)
-//	intense = getIntense(x - *prevx);
-//	rotMatAroundVec((mat3f *) &cnf.head, cnf.head.r3,
-//					M_PI / 180. * cnf.game.snakeDefault.rotSpeed * intense * mouseInvert);	// r3 - left direction (rot around left)
-
 	*prevx = x;
 	*prevy = y;
 }
 
-	void mouseMove(int x, int y) {
+void mouseMove(int x, int y) {
+	if (cnf.game.pause)
+		return;
+
 	if (g_pressedMouse.left)
 		moveSnake(x, y, &g_pressedMouse.pushedlx, &g_pressedMouse.pushedly);
-	if (g_pressedMouse.right)
-		moveCam(x, y, &g_pressedMouse.pushedrx, &g_pressedMouse.pushedry);
+//	if (g_pressedMouse.right)
+//		moveCam(x, y, &g_pressedMouse.pushedrx, &g_pressedMouse.pushedry);
 }
