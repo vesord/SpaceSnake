@@ -58,6 +58,7 @@ static void initSnake() {
 
 static void setDefaultConfiguration() {
 	cnf.game = configDefault.game;
+	cnf.head = configDefault.head;
 	cnf.cam = configDefault.cam;
 }
 

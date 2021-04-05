@@ -28,19 +28,27 @@ typedef struct	s_listPos {
 	t_material_type		material;
 }				t_listPos;
 
+typedef struct	s_cameraParams {
+	vec3f camDir;
+	GLfloat zoom;
+	GLfloat zoomMax;
+	GLfloat zoomMin;
+}				gameCamera;
+
 typedef struct	s_globalConfiguration {
 	t_listPos		*snake;			// todo change pos list to (void* data) list
 	t_listPos		*fruits;
-	mat3f 			cam;
+	mat3f 			head;
 	gameParams		game;
 	gameTextures	tex;
+	gameCamera		cam;
 }				t_globalConfiguration;
 
 static t_globalConfiguration configDefault = {.snake = NULL, .fruits = NULL,
-	.cam = {
-		.r1.x = 0.f, .r1.y = 0.f, .r1.z = -1.f,	// forward
+	.head = {
+		.r1.x = 0.f, .r1.y = 0.f, .r1.z = -1.f,		// forward
 		.r2.x = 0.f, .r2.y = 1.f, .r2.z = 0.f,		// up
-		.r3.x =1.f, .r3.y =0.f, .r3.z = 0.f		// right
+		.r3.x =1.f, .r3.y =0.f, .r3.z = 0.f			// right
 	},
 	.game = {
 		.snakeDefault.size = 1.f,
@@ -53,7 +61,13 @@ static t_globalConfiguration configDefault = {.snake = NULL, .fruits = NULL,
 		.snakeDefault.growCount = 2,
 		.fruitDefault.size = 0.9f,
 		.fruitDefault.initCount = 10,
-		.cell.radius = 50.f}
+		.cell.radius = 50.f},
+	.cam = {
+		.camDir = {.x = -0.92847669088f, .y = 0.3713906763f, .z = 0.f},
+		.zoom = 11,
+		.zoomMax = 50,
+		.zoomMin = 5
+		}
 };
 
 void restart();

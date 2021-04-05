@@ -4,18 +4,18 @@
 extern t_globalConfiguration cnf;
 
 static void calcCamStep(GLfloat step) {
-	cnf.snake->pos.x += cnf.cam.r1.x * step;
-	cnf.snake->pos.y += cnf.cam.r1.y * step;
-	cnf.snake->pos.z += cnf.cam.r1.z * step;
+	cnf.snake->pos.x += cnf.head.r1.x * step;
+	cnf.snake->pos.y += cnf.head.r1.y * step;
+	cnf.snake->pos.z += cnf.head.r1.z * step;
 }
 
 static void calcSnakeStep(GLfloat step) {
 	t_listPos *body = cnf.snake;
 	t_listPos *prev;
 
-	body->pos.x += cnf.cam.r1.x * step;
-	body->pos.y += cnf.cam.r1.y * step;
-	body->pos.z += cnf.cam.r1.z * step;
+	body->pos.x += cnf.head.r1.x * step;
+	body->pos.y += cnf.head.r1.y * step;
+	body->pos.z += cnf.head.r1.z * step;
 	prev = body;
 	body = body->next;
 
