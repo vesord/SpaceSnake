@@ -50,6 +50,7 @@ static t_globalConfiguration configDefault = {.snake = NULL, .fruits = NULL,
 		.snakeDefault.movSpeedIncrease = 0.002,
 		.snakeDefault.rotSpeed = 4.5f,
 		.snakeDefault.rotSpeedIncrease = 0.045f,
+		.snakeDefault.growCount = 2,
 		.fruitDefault.size = 0.9f,
 		.fruitDefault.initCount = 10,
 		.cell.radius = 50.f}

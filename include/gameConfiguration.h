@@ -12,6 +12,7 @@ typedef struct	s_snakeParams {
 	GLfloat rotSpeed;
 	GLfloat movSpeedIncrease;
 	GLfloat rotSpeedIncrease;
+	GLint   growCount;
 	t_material_type material;
 }				t_snakeParams;
 

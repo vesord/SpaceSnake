@@ -89,7 +89,7 @@ void addFruits(GLint count) {
 
 static void fruitEatenAction(t_listPos *fruit) {
 	addFruits(1);
-	snakeGrow(2, fruit->material);
+	snakeGrow(cnf.game.snakeDefault.growCount, fruit->material);
 	cnf.game.snakeDefault.movSpeed += cnf.game.snakeDefault.movSpeedIncrease;
 	cnf.game.snakeDefault.rotSpeed += cnf.game.snakeDefault.rotSpeedIncrease;
 }
