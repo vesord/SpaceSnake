@@ -1,39 +1,13 @@
-//
-// Created by vesord on 03.04.2021.
-//
-
 #ifndef SPACESNAKE_SPACESNAKE_H
 #define SPACESNAKE_SPACESNAKE_H
 
 #include <GL/glut.h>
+#include "types.h"
 #include "materials.h"
 #include "gameConfiguration.h"
 #include "gameTextures.h"
-
-typedef struct	s_vec3f {
-	GLfloat x;
-	GLfloat y;
-	GLfloat z;
-}				vec3f;
-
-typedef struct	s_mat3f {
-	vec3f r1;
-	vec3f r2;
-	vec3f r3;
-}				mat3f;
-
-typedef struct	s_listPos {
-	struct s_listPos*	next;
-	vec3f				pos;
-	t_material_type		material;
-}				t_listPos;
-
-typedef struct	s_cameraParams {
-	vec3f camDir;
-	GLfloat zoom;
-	GLfloat zoomMax;
-	GLfloat zoomMin;
-}				gameCamera;
+#include "gameCamera.h"
+#include "gameWindow.h"
 
 typedef struct	s_globalConfiguration {
 	t_listPos		*snake;			// todo change pos list to (void* data) list
@@ -42,6 +16,7 @@ typedef struct	s_globalConfiguration {
 	gameParams		game;
 	gameTextures	tex;
 	gameCamera		cam;
+	gameWindow		window;
 }				t_globalConfiguration;
 
 static t_globalConfiguration configDefault = {.snake = NULL, .fruits = NULL,
@@ -67,7 +42,18 @@ static t_globalConfiguration configDefault = {.snake = NULL, .fruits = NULL,
 		.zoom = 25,
 		.zoomMax = 50,
 		.zoomMin = 5
-		}
+		},
+	.window = {
+		.width = 640,
+		.height = 640,
+		.initPosX = 20,
+		.initPosY = 20,
+		.aspect = 1.,
+		.fovy = 60.,
+		.zFar = 2000.,
+		.zNear = 2,
+		.fullscreen = 0
+	}
 };
 
 void restart();

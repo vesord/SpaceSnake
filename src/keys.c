@@ -4,6 +4,7 @@
 #include <math.h>
 
 t_pressedKeys g_pressedKeys;
+t_pressedMouse g_pressedMouse;
 extern t_globalConfiguration cnf;
 
 void doKeysActions() {
@@ -57,10 +58,23 @@ static void wheelDownAction() {
 	cnf.cam.zoom = cnf.cam.zoom == cnf.cam.zoomMin ? cnf.cam.zoom : cnf.cam.zoom - 1.f;
 }
 
-void mouse(int button, int state, int x, int y) {
+void mouseButton(int button, int state, int x, int y) {
 	switch (button) {
+		case 1: g_pressedMouse.left = state == GLUT_UP ? 0 : 1; break;
+		case 2: g_pressedMouse.right = state == GLUT_UP ? 0 : 1; break;
 		case 3: if (state == GLUT_UP) wheelUpAction(); break;
 		case 4: if (state == GLUT_UP) wheelDownAction(); break;
 		default: break;
 	}
+}
+
+static void moveCam(int x, int y) {
+	static int prevx;
+	static int prevy;
+
+}
+
+void mouseMove(int x, int y) {
+	if (g_pressedMouse.right)
+		moveCam(x, y);
 }

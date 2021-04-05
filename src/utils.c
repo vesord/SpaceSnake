@@ -1,4 +1,4 @@
-#include "spaceSnake.h"
+#include "types.h"
 #include "math.h"
 
 void swapGLfloat(GLfloat* first, GLfloat* second) {

@@ -10,8 +10,8 @@ t_globalConfiguration cnf;
 void initGlut(int *argc, char ** argv) {
 	glutInit(argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-	glutInitWindowSize(640, 640);		// todo add to config
-	glutInitWindowPosition(20, 20);
+	glutInitWindowSize(cnf.window.width, cnf.window.height);
+	glutInitWindowPosition(cnf.window.initPosX, cnf.window.initPosY);
 	glutCreateWindow("Space Snake");
 	glutReshapeFunc(reshape);
 	glutDisplayFunc(display);
@@ -19,7 +19,8 @@ void initGlut(int *argc, char ** argv) {
 	glutIgnoreKeyRepeat(GL_TRUE);
 	glutKeyboardFunc(keyPressed);
 	glutKeyboardUpFunc(keyReleased);
-	glutMouseFunc(mouse);
+	glutMouseFunc(mouseButton);
+	glutMotionFunc(mouseMove);
 }
 
 void initGL() {
@@ -29,10 +30,10 @@ void initGL() {
 	glEnable(GL_NORMALIZE);
 	glEnable(GL_CULL_FACE);
 
-	glViewport(0, 0, 640, 640); // todo add config window size
+	glViewport(0, 0, cnf.window.width, cnf.window.height);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(60., 1., 2., 2000.); // todo add config fov aspect
+	gluPerspective(cnf.window.fovy, cnf.window.aspect, cnf.window.zNear, cnf.window.zFar);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
@@ -118,6 +119,7 @@ void initTextures() {
 }
 
 int main(int argc, char ** argv) {
+	cnf = configDefault;
 	initGlut(&argc, argv);
 	initGL();
 	initTextures();

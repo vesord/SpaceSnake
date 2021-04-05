@@ -14,9 +14,15 @@ typedef struct	s_pressedKeys {
 	char e;
 }				t_pressedKeys;
 
+typedef struct	s_pressedMouse {
+	char left;
+	char right;
+}				t_pressedMouse;
+
 void doKeysActions();
 void keyPressed(unsigned char key, int x, int y);
 void keyReleased(unsigned char key, int x, int y);
-void mouse(int button, int state, int x, int y);
+void mouseButton(int button, int state, int x, int y);
+void mouseMove(int x, int y);
 
 #endif //SPACESNAKE_KEYS_H

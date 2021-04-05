@@ -2,7 +2,6 @@
 #include "drawing.h"
 #include "moving.h"
 #include "keys.h"
-#include "utils.h"
 
 extern t_globalConfiguration cnf;
 
