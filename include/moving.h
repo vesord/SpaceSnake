@@ -5,6 +5,8 @@
 #ifndef SPACESNAKE_MOVING_H
 #define SPACESNAKE_MOVING_H
 
+void checkDeath();
+void checkEatSelf();
 void calculateStep();
 void addFruits(GLint count);
 

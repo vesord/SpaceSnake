@@ -3,6 +3,7 @@
 #include "keys.h"
 #include "moving.h"
 #include "bmp.h"
+#include "utils.h"
 
 GLuint g_texSun;
 GLuint g_texSpace;
@@ -52,7 +53,11 @@ void initGL() {
 	glLoadIdentity();
 }
 
-void initSnake() {
+static void deleteSnake() {
+	lstFreeSimple(cnf.snake);
+}
+
+static void initSnake() {
 	cnf.snake = malloc(sizeof *cnf.snake);
 	cnf.snake->pos.x = 0.f;
 	cnf.snake->pos.y = 0.f;
@@ -88,6 +93,11 @@ void initSnake() {
 	cnf.snake->next->next->next = tmp;
 
 	// todo end delete
+}
+
+void restart() {
+	deleteSnake();
+	initSnake();
 }
 
 void initLight() {
@@ -137,8 +147,8 @@ int main(int argc, char ** argv) {
 	initGL();
 	initTextures();
 	initLight();
-	initSnake();
 	addFruits(cnf.game.fruitDefault.initCount);
+	restart();
 
 	glutMainLoop();
 	return 0;

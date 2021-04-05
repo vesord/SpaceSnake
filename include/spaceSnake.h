@@ -34,4 +34,6 @@ typedef struct	s_globalConfiguration {
 	gameParams	game;
 }				t_globalConfiguration;
 
+void restart();
+
 #endif //SPACESNAKE_SPACESNAKE_H

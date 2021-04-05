@@ -15,4 +15,6 @@ vec3f randVec3fRange(GLfloat min, GLfloat max);
 
 GLfloat distance(vec3f v1, vec3f v2);
 
+void lstFreeSimple(t_listPos *lst);
+
 #endif //SPACESNAKE_UTILS_H

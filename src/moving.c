@@ -45,7 +45,7 @@ static void snakeGrow() {	// todo add saving last snake part
 	body->next->pos.z = body->pos.z + cnf.game.snakeDefault.bodyDistance;
 }
 
-void fruitDelete(t_listPos *toDelete) { // todo optimize somehow
+static void fruitDelete(t_listPos *toDelete) { // todo optimize somehow
 	t_listPos *fruit = cnf.fruits;
 
 	if (!toDelete)
@@ -82,7 +82,7 @@ void addFruits(GLint count) {
 	}
 }
 
-void checkFruitEating() {
+static void checkFruitEating() {
 	t_listPos *fruit = cnf.fruits;
 
 	for (; fruit; fruit = fruit->next) {
@@ -100,4 +100,27 @@ void calculateStep() {
 	calcCamStep(step);
 	calcSnakeStep(step);
 	checkFruitEating();
+}
+
+void checkDeath() {
+	static const vec3f origin = {.x = 0.f, .y = 0.f, .z = 0.f};
+
+	if (distance(cnf.snake->pos, origin) > cnf.game.cell.radius - cnf.game.snakeDefault.size) {
+		restart();
+	}
+}
+
+void checkEatSelf() {
+	t_listPos *body = cnf.snake->next;
+
+	if (!body)
+		return;
+
+	for (; body->next; body = body->next) {
+		if (distance(cnf.snake->pos, body->next->pos) < cnf.game.snakeDefault.bodyDistance) {
+			lstFreeSimple(body->next);
+			body->next = NULL;
+			return;
+		}
+	}
 }

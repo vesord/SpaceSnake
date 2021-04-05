@@ -95,3 +95,13 @@ GLfloat distance(vec3f v1, vec3f v2) {
 				  + (v1.y - v2.y) * (v1.y - v2.y)
 				  + (v1.z - v2.z) * (v1.z - v2.z));
 }
+
+void lstFreeSimple(t_listPos *lst) {
+	t_listPos *cur;
+
+	while (lst) {
+		cur = lst;
+		lst = lst->next;
+		free(cur);
+	}
+}

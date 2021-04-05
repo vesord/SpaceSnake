@@ -28,6 +28,8 @@ void display() {
 	locateLight();
 
 	calculateStep();
+	checkDeath();
+	checkEatSelf();
 	doKeysActions();
 
 	glFlush();
