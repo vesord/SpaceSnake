@@ -11,17 +11,17 @@ void doKeysActions() {	// todo optimization multiplication
 	static const GLfloat keyInvert = 1.;	// todo add to config
 
 	if (g_pressedKeys.a)
-		rotateMatVec((mat3f*)&cnf.head, cnf.head.r2, M_PI / 180. * cnf.game.snakeDefault.rotSpeed * keyInvert);	// r2 - up direction (rot around up)
+		rotMatAroundVec((mat3f *) &cnf.head, cnf.head.r2, M_PI / 180. * cnf.game.snakeDefault.rotSpeed * keyInvert);	// r2 - up direction (rot around up)
 	if (g_pressedKeys.d)
-		rotateMatVec((mat3f*)&cnf.head, cnf.head.r2, M_PI / 180. * -cnf.game.snakeDefault.rotSpeed * keyInvert);
+		rotMatAroundVec((mat3f *) &cnf.head, cnf.head.r2, M_PI / 180. * -cnf.game.snakeDefault.rotSpeed * keyInvert);
 	if (g_pressedKeys.w)
-		rotateMatVec((mat3f*)&cnf.head, cnf.head.r3, M_PI / 180. * -cnf.game.snakeDefault.rotSpeed * keyInvert);	// r3 - left direction (rot around left)
+		rotMatAroundVec((mat3f *) &cnf.head, cnf.head.r3, M_PI / 180. * -cnf.game.snakeDefault.rotSpeed * keyInvert);	// r3 - left direction (rot around left)
 	if (g_pressedKeys.s)
-		rotateMatVec((mat3f*)&cnf.head, cnf.head.r3, M_PI / 180. * cnf.game.snakeDefault.rotSpeed * keyInvert);
+		rotMatAroundVec((mat3f *) &cnf.head, cnf.head.r3, M_PI / 180. * cnf.game.snakeDefault.rotSpeed * keyInvert);
 	if (g_pressedKeys.q)
-		rotateMatVec((mat3f*)&cnf.head, cnf.head.r1, M_PI / 180. * -cnf.game.snakeDefault.rotSpeed * keyInvert);	// r1 - front direction (rot around front)
+		rotMatAroundVec((mat3f *) &cnf.head, cnf.head.r1, M_PI / 180. * -cnf.game.snakeDefault.rotSpeed * keyInvert);	// r1 - front direction (rot around front)
 	if (g_pressedKeys.e)
-		rotateMatVec((mat3f*)&cnf.head, cnf.head.r1, M_PI / 180. * cnf.game.snakeDefault.rotSpeed * keyInvert);
+		rotMatAroundVec((mat3f *) &cnf.head, cnf.head.r1, M_PI / 180. * cnf.game.snakeDefault.rotSpeed * keyInvert);
 
 	normalize(&cnf.head.r1);
 	normalize(&cnf.head.r2);
@@ -95,9 +95,11 @@ static void moveSnake(int x, int y, int *prevx, int *prevy) { // todo optimizati
 	GLfloat intense;
 
 	intense = getIntense(x - *prevx);
-	rotateMatVec((mat3f*)&cnf.head, cnf.head.r2, M_PI / 180. * cnf.game.snakeDefault.rotSpeed * intense * mouseInvert);	// r2 - up direction (rot around up)
-	intense = getIntense(x - * prevy);
-	rotateMatVec((mat3f*)&cnf.head, cnf.head.r3, M_PI / 180. * cnf.game.snakeDefault.rotSpeed * intense * mouseInvert);	// r3 - left direction (rot around left)
+	rotMatAroundVec((mat3f *) &cnf.head, cnf.head.r2,
+					M_PI / 180. * cnf.game.snakeDefault.rotSpeed * intense * mouseInvert);	// r2 - up direction (rot around up)
+	intense = getIntense(y - * prevy);
+	rotMatAroundVec((mat3f *) &cnf.head, cnf.head.r3,
+					M_PI / 180. * cnf.game.snakeDefault.rotSpeed * intense * mouseInvert);	// r3 - left direction (rot around left)
 	*prevx = x;
 	*prevy = y;
 }
@@ -105,11 +107,21 @@ static void moveSnake(int x, int y, int *prevx, int *prevy) { // todo optimizati
 static void moveCam(int x, int y, int *prevx, int *prevy) {
 	static const GLfloat mouseInvert = -1.;	// todo add to config
 	GLfloat intense;
+	mat3f rotMat;
 
 	intense = getIntense(x - *prevx);
-	rotateMatVec((mat3f*)&cnf.head, cnf.head.r2, M_PI / 180. * cnf.game.snakeDefault.rotSpeed * intense * mouseInvert);	// r2 - up direction (rot around up)
-	intense = getIntense(x - *prevx);
-	rotateMatVec((mat3f*)&cnf.head, cnf.head.r3, M_PI / 180. * cnf.game.snakeDefault.rotSpeed * intense * mouseInvert);	// r3 - left direction (rot around left)
+	genRotMat(&rotMat, normalVecZ, M_PI / 180. * 5.f * intense * mouseInvert);
+	rotVec(&cnf.cam.camDir, &rotMat);
+
+	intense = getIntense(y - *prevy);
+	genRotMat(&rotMat, normalVecY, M_PI / 180. * 5.f * intense * mouseInvert);
+	rotVec(&cnf.cam.camDir, &rotMat);
+
+//	rotMatAroundVec((mat3f *) &cnf.head, cnf.head.r2,
+//					M_PI / 180. * cnf.game.snakeDefault.rotSpeed * intense * mouseInvert);	// r2 - up direction (rot around up)
+//	intense = getIntense(x - *prevx);
+//	rotMatAroundVec((mat3f *) &cnf.head, cnf.head.r3,
+//					M_PI / 180. * cnf.game.snakeDefault.rotSpeed * intense * mouseInvert);	// r3 - left direction (rot around left)
 
 	*prevx = x;
 	*prevy = y;

@@ -22,4 +22,8 @@ typedef struct	s_listPos {
 	t_material_type		material;
 }				t_listPos;
 
+static const vec3f normalVecZ = {.x = 0.f, .y = 0.f, .z = 1.f};
+static const vec3f normalVecY = {.x = 0.f, .y = 1.f, .z = 0.f};
+static const vec3f normalVecX = {.x = 1.f, .y = 0.f, .z = 0.f};
+
 #endif //SPACESNAKE_TYPES_H

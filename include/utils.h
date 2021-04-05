@@ -7,7 +7,9 @@
 
 #include "spaceSnake.h"
 
-void rotateMatVec(mat3f * mat, vec3f vec, GLfloat angle);
+void genRotMat(mat3f *rotMat, vec3f vec, GLfloat angle);
+void rotVec(vec3f *vec, mat3f *rotMat);
+void rotMatAroundVec(mat3f * mat, vec3f vec, GLfloat angle);
 void normalize(vec3f* vec);
 void transposeMat(mat3f *mat);
 

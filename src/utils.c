@@ -45,28 +45,42 @@ void transposeMat(mat3f *mat) {
 	swapGLfloat(&mat->r2.z, &mat->r3.y);
 }
 
+void genRotMat(mat3f *rotMat, vec3f vec, GLfloat angle) {
+	GLfloat angCos = cosf(angle);
+	GLfloat angSin = sinf(angle);
+	rotMat->r1.x = angCos + (1 - angCos) * vec.x * vec.x;
+	rotMat->r1.y = (1 - angCos) * vec.x * vec.y - angSin * vec.z;
+	rotMat->r1.z = (1 - angCos) * vec.x * vec.z + angSin * vec.y;
+	rotMat->r2.x = (1 - angCos) * vec.y * vec.x + angSin * vec.z;
+	rotMat->r2.y = angCos + (1 - angCos) * vec.y * vec.y;
+	rotMat->r2.z = (1 - angCos) * vec.y * vec.z - angSin * vec.x;
+	rotMat->r3.x = (1 - angCos) * vec.z * vec.x - angSin * vec.y;
+	rotMat->r3.y	= (1 - angCos) * vec.z * vec.y + angSin * vec.x;
+	rotMat->r3.z = angCos + (1 - angCos) * vec.z * vec.z;
+}
+
 /**
  * rotation is performed by rotation 3x3 matrix
  * \param mat is pointer to 3x3 matrix which would be rotated
  * \param vec normalized 3x1 vector around which rotate
  * \param angle angle
 */
-void rotateMatVec(mat3f * mat, vec3f vec, GLfloat angle) { // todo think about moving getting rot matrix in another r1()
-	GLfloat angCos = cosf(angle);
-	GLfloat angSin = sinf(angle);
+void rotMatAroundVec(mat3f * mat, vec3f vec, GLfloat angle) { // todo think about moving getting rot matrix in another r1()
 	mat3f rotMat;
-	rotMat.r1.x = angCos + (1 - angCos) * vec.x * vec.x;
-	rotMat.r1.y = (1 - angCos) * vec.x * vec.y - angSin * vec.z;
-	rotMat.r1.z = (1 - angCos) * vec.x * vec.z + angSin * vec.y;
-	rotMat.r2.x = (1 - angCos) * vec.y * vec.x + angSin * vec.z;
-	rotMat.r2.y = angCos + (1 - angCos) * vec.y * vec.y;
-	rotMat.r2.z = (1 - angCos) * vec.y * vec.z - angSin * vec.x;
-	rotMat.r3.x = (1 - angCos) * vec.z * vec.x - angSin * vec.y;
-	rotMat.r3.y	= (1 - angCos) * vec.z * vec.y + angSin * vec.x;
-	rotMat.r3.z = angCos + (1 - angCos) * vec.z * vec.z;
+	genRotMat(&rotMat, vec, angle);
+
 	transposeMat(mat);
 	*mat = mulMat(&rotMat, mat);
 	transposeMat(mat);
+}
+
+void rotVec(vec3f *vec, mat3f *rotMat) {
+	vec3f res;
+
+	res.x = vec->x * rotMat->r1.x + vec->y * rotMat->r1.y + vec->z * rotMat->r1.z;
+	res.y = vec->x * rotMat->r2.x + vec->y * rotMat->r2.y + vec->z * rotMat->r2.z;
+	res.z = vec->x * rotMat->r3.x + vec->y * rotMat->r3.y + vec->z * rotMat->r3.z;
+	*vec = res;
 }
 
 void normalize(vec3f* vec) {
