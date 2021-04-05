@@ -11,7 +11,17 @@ ENDIF()
 
 include_directories(include)
 
-add_executable(SpaceSnake src/main.c src/drawing.c include/drawing.h src/moving.c include/moving.h include/spaceSnake.h src/utils.c include/utils.h src/keys.c include/keys.h src/materials.c include/materials.h src/display.c include/display.h include/bmp.h src/bmp.c include/gameConfiguration.h include/gameTextures.h include/types.h include/gameCamera.h include/gameWindow.h include/gameControls.h)
+SET(SRC src/main.c
+    src/drawing.c
+    src/moving.c
+    src/utils.c
+    src/keys.c
+    src/materials.c
+    src/display.c
+    src/bmp.c
+    )
+
+add_executable(SpaceSnake ${SRC})
 
 IF(UNIX AND NOT APPLE)
     target_link_libraries(SpaceSnake glut GL GLU m)
