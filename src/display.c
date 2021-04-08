@@ -42,17 +42,18 @@ void display() {
 	drawFruits();
 	locateLight();
 
-	move();
-	checkEvents();
-	doKeysActions();
+	if (!cnf.game.pause) {
+		move();
+		checkEvents();
+		doKeysActions();
+	}
 
 	glFlush();
 	glutSwapBuffers();
 }
 
 void idle() {
-	if (!cnf.game.pause)
-		display();
+	display();
 }
 
 void reshape(GLsizei w, GLsizei h) {

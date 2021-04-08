@@ -45,9 +45,6 @@ void keyPressed(unsigned char key, int x, int y) {
 }
 
 void keyReleased(unsigned char key, int x, int y) {
-	if (cnf.game.pause)
-		return;
-
 	switch (key) {
 		case 'a': g_pressedKeys.a = 0; break;
 		case 'd': g_pressedKeys.d = 0; break;
@@ -68,9 +65,6 @@ static void wheelDownAction() {
 }
 
 void mouseButton(int button, int state, int x, int y) {
-	if (cnf.game.pause)
-		return;
-
 	switch (button) {
 		case GLUT_LEFT_BUTTON: {
 			g_pressedMouse.left = state == GLUT_UP ? 0 : 1;
@@ -113,11 +107,11 @@ static void moveCam(int x, int y, int *prevx, int *prevy) {
 	mat3f rotMat;
 
 	intense = getIntense(x - *prevx);
-	genRotMat(&rotMat, normalVecZ, M_PI / 180. * 5.f * intense * cnf.control.mouseInverse);
+	genRotMat(&rotMat, normalVecY, M_PI / 180. * 5.f * intense * cnf.control.mouseInverse);
 	rotVec(&cnf.cam.camDir, &rotMat);
 
 	intense = getIntense(y - *prevy);
-	genRotMat(&rotMat, normalVecY, M_PI / 180. * 5.f * intense * cnf.control.mouseInverse);
+	genRotMat(&rotMat, normalVecZ, M_PI / 180. * 5.f * intense * cnf.control.mouseInverse);
 	rotVec(&cnf.cam.camDir, &rotMat);
 
 	*prevx = x;
@@ -126,9 +120,6 @@ static void moveCam(int x, int y, int *prevx, int *prevy) {
 
 // cam rotation by mouse is not working properly...
 void mouseMove(int x, int y) {
-	if (cnf.game.pause)
-		return;
-
 	if (g_pressedMouse.left)
 		moveSnake(x, y, &g_pressedMouse.pushedlx, &g_pressedMouse.pushedly);
 //	if (g_pressedMouse.right)
