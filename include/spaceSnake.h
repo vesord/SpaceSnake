@@ -50,7 +50,7 @@ static const t_globalConfiguration g_configDefault = {.snake = NULL, .fruits = N
 	.cam = {
 		.camDir = {.x = -0.92847669088f, .y = 0.3713906763f, .z = 0.f},
 		.zoom = 25,
-		.zoomMax = 50,
+		.zoomMax = 150,
 		.zoomMin = 5
 		},
 	.window = {
