@@ -7,6 +7,8 @@
 #else
 # include "GL/glut.h"
 #endif
+
+#include <stdlib.h>
 #include "types.h"
 #include "materials.h"
 #include "gameConfiguration.h"

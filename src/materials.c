@@ -5,6 +5,7 @@
 # include "GL/glut.h"
 #endif
 #include "materials.h"
+#include <stdlib.h>
 
 typedef struct	s_material {
 	t_material_type type;
